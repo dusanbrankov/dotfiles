@@ -2,7 +2,7 @@ if has('termguicolors')
     set termguicolors
 endif
 
-" Colorscheme:
+" Colorscheme: {{{
 " https://github.com/sainnhe/everforest/tree/master
 
     set background=dark
@@ -18,8 +18,9 @@ endif
     let g:everforest_ui_contrast = 'high'
 
     colorscheme everforest
+" }}}
 
-" Set: --------------------------------------------------------------
+" Set: {{{
 
 " General:
     syntax on
@@ -27,6 +28,8 @@ endif
     set nocompatible
     set timeoutlen=3000
     set ttimeoutlen=100
+    " fold based on indent
+    set foldmethod=marker
 
 " Indentation:
     " number of columns occupied by a tab
@@ -66,8 +69,9 @@ endif
     set wildmenu
     set title
     set laststatus=2
+" }}}
 
-" Status_Line: —---------------------------------------------------
+" Status_Line: {{{
 " https://learnvimscriptthehardway.stevelosh.com/chapters/17.html
 
     set statusline=%.20f\       " Path to the file
@@ -76,15 +80,17 @@ endif
     set statusline+=[%l,%c      " Current line
     set statusline+=/           " Separator
     set statusline+=%L]         " Total lines
+" }}}
 
-" Filetype: ---------------------------------------------------------
+" Filetype: {{{
 
 " Filetype_Settings:
     filetype plugin on
     " switch on file type detection, with automatic indenting and settings
     filetype plugin indent on
+" }}}
 
-" Key_Mappings: -----------------------------------------------------
+" Key_Mappings: {{{
 
 " Types_of_mappings:
     " map    normal, visual and operator-pending mode
@@ -189,13 +195,15 @@ endif
 "     onoremap il( :<c-u>normal! F)vi(<cr>
 "     onoremap in[ :<c-u>normal! f[vi[<cr>
 "     onoremap il[ :<c-u>normal! F]vi[<cr>
+" }}}
 
-" Abbreviations: ----------------------------------------------------
+" Abbreviations: {{{
 
     " iabbrev --- —
     iabbrev iff if [ ]<left><left>
+" }}}
 
-" Autocommands: -----------------------------------------------------
+" Autocommands: {{{
 
     augroup filtetype_vim
         autocmd!
@@ -217,4 +225,5 @@ endif
         " Remove trailing spaces on :write
         autocmd BufWrite * :%s/\s\+$//e
     augroup END
+" }}}
 
