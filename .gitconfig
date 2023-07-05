@@ -7,7 +7,7 @@
 	name = Dušan Brankov
 	email = dusanbrankov@proton.me
 [core]
-	editor = code --wait
+	editor = vim --nofork
 	autocrlf = input
 [credential "https://github.com"]
 	helper =
