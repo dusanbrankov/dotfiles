@@ -131,7 +131,7 @@ endif
     " toggle relativenumber
     nnoremap <leader>r :set relativenumber!<cr>
     " shellcheck
-    nnoremap <leader>sc :!clear && shellcheck %<cr>
+    nnoremap <leader>sc :wa<cr>:!clear && shellcheck %<cr>
     " add a new line and stay in normal mode
     nnoremap <leader>o o<esc>
     nnoremap <leader>O O<esc>
