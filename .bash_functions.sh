@@ -111,7 +111,7 @@ local-backup() {
 # fuzzy finder
 # Usage: <ctrl-f>
 cd_fzf() {
-    cd "$(fd -td --hidden --base-directory $HOME \
+    cd "$(fd -td --hidden --absolute-path --base-directory $HOME \
         | fzf \
         --exact \
         --preview="tree -L 1 {}" \
