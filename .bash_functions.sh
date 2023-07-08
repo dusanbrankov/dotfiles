@@ -111,12 +111,20 @@ local-backup() {
 # fuzzy finder
 # Usage: <ctrl-f>
 cd_fzf() {
-    cd "$(fd -td --hidden --absolute-path --base-directory $HOME \
-        | fzf \
-        --exact \
+    cd "$(fd -td --hidden --absolute-path --base-directory "$HOME" \
+        | fzf --exact \
         --preview="tree -L 1 {}" \
         --bind="space:toggle-preview" \
         --preview-window=:hidden)" || return 1
+}
+
+open_fzf() {
+    $EDITOR "$(fd -tf --hidden --no-ignore --absolute-path \
+        --base-directory "$HOME" \
+        | fzf --exact \
+        --preview="cat {}" \
+        --bind="space:toggle-preview" \
+        --preview-window=:hidden)"
 }
 
 # list dot files and directories
