@@ -103,7 +103,7 @@ local-backup() {
     fi
 
     sudo rsync -av --delete \
-        --exclude={'Downloads','Music','Steam','Videos','.steam'} \
+        --exclude={'Downloads','Music','Pictures','Videos','Steam','.steam'} \
         "$HOME" /media/dbran/HardDisk27491/backup \
         2> >(tee "$HOME/Documents/backups/my_backup/backup_error_$date.log")
 }
