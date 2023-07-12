@@ -18,7 +18,7 @@ alias ....='cd ../../..'
 alias -- -='cd -'
 
 # ls shortcuts
-alias ll='ls -hls'
+# alias ll='ls -hls'
 alias la='ls -hlsaA'
 alias l1='ls -1'
 
@@ -31,8 +31,9 @@ alias ui='sudo apt update && sudo apt install'
 alias st='speedtest'
 alias open='xdg-open'
 
-# mkdir shortcuts
+# rmdir, mkdir etc.
 alias mkp='mkdir -p'
+alias rmd='rm -r'
 
 # npm
 alias ns='npm start'
