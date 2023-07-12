@@ -12,8 +12,33 @@ mkcd() {
 # create direcotires and files in one command
 # info: the dirname command in Linux prints a file path with its final component
 # removed. this basically gives you the directory path from the file path.
-mkfile() {
-    mkdir -p "$(dirname "$1")" && touch "$1"
+mkf() {
+    mkdir -p "${1%/*}" && touch "$@"
+}
+
+# list directory contents and print number of dotfiles if any
+ll() {
+    local current_dir=${1:-.}
+    local dotfiles=("${current_dir%/}"/.[!.]*)
+    if [ -e "${dotfiles[0]}" ]; then
+        echo "$(tput bold)hidden files: ${#dotfiles[@]}$(tput sgr0)"
+    fi
+    ls -hls "$@"
+}
+
+# list dotfiles and directories
+ld() {
+    ls -dl .[!.]* 2>/dev/null
+}
+
+# list only dotfiles
+ldf() {
+    ls -pdl .[!.]* | grep -v '/$' 2>/dev/null
+}
+
+# list only dot-directories
+ldd() {
+    ls -dl .[!.]*/ 2>/dev/null
 }
 
 cheat() {
@@ -45,11 +70,10 @@ set-title() {
     PS1=${ORIG}${TITLE}
 }
 
-# create file and open in vs code
+# create file (and directories) and open file in vs code
 copen() {
-    # local path="${1%/*}"
-    # mkdir -p "${path}"
-    mkdir -p "$(dirname "$1")"
+    [[ "$1" = */* ]] && mkdir -p "${1%/*}"
+    # mkdir -p "$(dirname "$1")"
     touch "$1"
     code -r "$1"
 }
@@ -118,28 +142,14 @@ cd_fzf() {
         --preview-window=:hidden)" || return 1
 }
 
+# fuzzy finder
+# Usage: <ctrl-o>
 open_fzf() {
-    $EDITOR "$(fd -tf --hidden --no-ignore --absolute-path \
-        --base-directory "$HOME" \
+    $EDITOR "$(fd -tf --hidden --ignore --strip-cwd-prefix \
         | fzf --exact \
         --preview="cat {}" \
         --bind="space:toggle-preview" \
         --preview-window=:hidden)"
-}
-
-# list dot files and directories
-ld() {
-    ls -dl .[!.]* 2>/dev/null
-}
-
-# list only dot files
-ldf() {
-    ls -pdl .[!.]* | grep -v '/$' 2>/dev/null
-}
-
-# list only dot directories
-ldd() {
-    ls -dl .[!.]*/ 2>/dev/null
 }
 
 # sample usage: calc '(2 + 3) / 2'
