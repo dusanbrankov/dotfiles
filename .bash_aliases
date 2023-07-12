@@ -41,12 +41,14 @@ alias nb='npm run build'
 
 # git
 alias ga='git add'
-alias gst='git status'
-alias gl='git log'
 alias gc='git commit'
 alias gcm='git commit -m'
-alias gps='git push'
+alias gd='git diff'
+alias gl='git log'
 alias gpl='git pull'
+alias gplr='git pull --rebase'
+alias gps='git push'
+alias gst='git status'
 
 # font-converter
 alias woffy='font-converter ft2wf'
