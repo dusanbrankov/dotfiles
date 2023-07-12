@@ -9,16 +9,13 @@
 #umask 022
 
 # if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-        . "$HOME/.bashrc"
-    fi
+if [ -n "$BASH_VERSION" ] && [ -r "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
 fi
 
 # set PATH so it includes user's private bin if it exists
-[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
-[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+[ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
 
 # npm: Resolving EACCES permissions errors when installing packages globally
 # https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally
