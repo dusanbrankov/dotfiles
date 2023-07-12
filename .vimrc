@@ -217,7 +217,7 @@ endif
     augroup filetype_md
         autocmd!
         autocmd FileType markdown vnoremap <buffer> <localleader>b <esc>`>a**<esc>`<i**<esc>
-        autocmd FileType markdown vnoremap <buffer> <localleader>B V<esc>`>a**<esc>`<i**<esc>
+        autocmd FileType markdown nnoremap <buffer> <localleader>B V<esc>`>a**<esc>`<i**<esc>
         autocmd FileType markdown vnoremap <buffer> <localleader>i <esc>`>a_<esc>`<i_<esc>
         autocmd FileType markdown vnoremap <buffer> <localleader>c <esc>`<O```<esc>`>o```<esc>`<kA
     augroup END
