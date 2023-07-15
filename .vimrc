@@ -132,8 +132,6 @@ endif
     nnoremap ; :
     " toggle relativenumber
     nnoremap <leader>r :set relativenumber!<cr>
-    " shellcheck
-    nnoremap <leader>sc :wa<cr>:!clear && shellcheck %<cr>
     " add a new line and stay in normal mode
     nnoremap <leader>o o<esc>
     nnoremap <leader>O O<esc>
@@ -227,5 +225,17 @@ endif
         " Remove trailing spaces on :write
         autocmd BufWrite * :%s/\s\+$//e
     augroup END
+
+    augroup filetype_sh
+        autocmd!
+        autocmd FileType sh nnoremap <buffer> <localleader>c :wa<cr>:!clear && shellcheck %<cr>
+        autocmd FileType sh nnoremap <buffer> <localleader>r :wa<cr>:!clear && ./%<cr>
+
+    augroup filetype_python
+        autocmd!
+        autocmd FileType python nnoremap <buffer> <localleader>c :wa<cr>:!clear && mypy %<cr>
+        autocmd FileType python nnoremap <buffer> <localleader>r :wa<cr>:!clear && python %<cr>
+
+
 " }}}
 
