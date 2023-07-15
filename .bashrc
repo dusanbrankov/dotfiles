@@ -46,7 +46,9 @@ export EDITOR='/usr/bin/vim'
 
 # key bindings
 bind '"\C-f":"cd_fzf\n"'
+bind '"\C-g":"cd_fzf_cwd\n"'
 bind '"\C-o":"open_fzf\n"'
+bind '"\C-p":"open_fzf_cwd\n"'
 bind '"\ez":"fg\n"'
 
 # make less more friendly for non-text input files, see lesspipe(1)

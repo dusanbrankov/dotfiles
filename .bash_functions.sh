@@ -132,7 +132,7 @@ local-backup() {
         2> >(tee "$HOME/Documents/backups/my_backup/backup_error_$date.log")
 }
 
-# fuzzy finder
+# cd with fuzzy finder
 # Usage: <ctrl-f>
 cd_fzf() {
     cd "$(fd -td --hidden --absolute-path --base-directory "$HOME" \
@@ -142,9 +142,29 @@ cd_fzf() {
         --preview-window=:hidden)" || return 1
 }
 
-# fuzzy finder
+# cd with fuzzy finder (cwd as startig point)
+# Usage: <ctrl-g>
+cd_fzf_cwd() {
+    cd "$(fd -td --hidden --absolute-path --strip-cwd-prefix \
+        | fzf --exact \
+        --preview="tree -L 1 {}" \
+        --bind="space:toggle-preview" \
+        --preview-window=:hidden)" || return 1
+}
+
+# open document with fuzzy finder
 # Usage: <ctrl-o>
 open_fzf() {
+    $EDITOR "$(fd -tf --hidden --ignore --absolute-path --base-directory "$HOME" \
+        | fzf --exact \
+        --preview="cat {}" \
+        --bind="space:toggle-preview" \
+        --preview-window=:hidden)"
+}
+
+# open document with fuzzy finder (cwd as starting point)
+# Usage: <ctrl-p>
+open_fzf_cwd() {
     $EDITOR "$(fd -tf --hidden --ignore --strip-cwd-prefix \
         | fzf --exact \
         --preview="cat {}" \
