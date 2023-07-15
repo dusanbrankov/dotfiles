@@ -18,7 +18,6 @@ alias ....='cd ../../..'
 alias -- -='cd -'
 
 # ls shortcuts
-# alias ll='ls -hls'
 alias la='ls -hlsaA'
 alias l1='ls -1'
 
@@ -27,6 +26,8 @@ alias h='history'
 alias hg='history | grep'
 alias i='sudo apt install'
 alias ui='sudo apt update && sudo apt install'
+alias j='jobs'
+alias v='vim'
 
 alias st='speedtest'
 alias open='xdg-open'
