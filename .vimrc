@@ -230,6 +230,7 @@ endif
         autocmd!
         autocmd FileType sh nnoremap <buffer> <localleader>c :wa<cr>:!clear && shellcheck %<cr>
         autocmd FileType sh nnoremap <buffer> <localleader>r :wa<cr>:!clear && ./%<cr>
+        autocmd FileType sh nnoremap <buffer> <localleader>R :wa<cr>:!clear && ./%
 
     augroup filetype_python
         autocmd!
