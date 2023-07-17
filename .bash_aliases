@@ -34,7 +34,7 @@ alias open='xdg-open'
 
 # rmdir, mkdir etc.
 alias mkp='mkdir -p'
-alias rmd='rm -r'
+alias rmr='rm -r'
 
 # npm
 alias ns='npm start'
@@ -59,8 +59,9 @@ alias ftweb='freetube https://www.youtube.com/playlist?list=PLWZ_T9JHHIpPh8jKzVV
 alias ftlinux='freetube https://youtube.com/playlist?list=PLWZ_T9JHHIpPPdH0haqui_81AEPNB_3rE'
 
 # more shortcuts
-alias md='frogmouth'
+alias md='glow'
 alias fd='fdfind'
+alias tldr='tldr --auto-update-interval 10'
 
 # 'cat' with syntax-highlighting
 alias bat='batcat'
