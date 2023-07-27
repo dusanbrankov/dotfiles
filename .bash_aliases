@@ -61,7 +61,7 @@ alias ftlinux='freetube https://youtube.com/playlist?list=PLWZ_T9JHHIpPPdH0haqui
 # more shortcuts
 alias md='glow'
 alias fd='fdfind'
-alias tldr='tldr --auto-update-interval 10'
+alias tldr='tldr -p linux'
 
 # 'cat' with syntax-highlighting
 alias bat='batcat'
