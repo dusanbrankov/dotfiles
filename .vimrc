@@ -237,6 +237,9 @@ endif
         autocmd FileType python nnoremap <buffer> <localleader>c :wa<cr>:!clear && mypy %<cr>
         autocmd FileType python nnoremap <buffer> <localleader>r :wa<cr>:!clear && python %<cr>
 
+    augroup filetype_javascript
+        autocmd!
+        autocmd FileType javascript nnoremap <buffer> <localleader>r :wa<cr>:!clear && node %<cr>
 
 " }}}
 
