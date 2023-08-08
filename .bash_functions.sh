@@ -13,7 +13,11 @@ mkcd() {
 # info: the dirname command in Linux prints a file path with its final component
 # removed. this basically gives you the directory path from the file path.
 mkf() {
-    mkdir -p "${1%/*}" && touch "$@"
+    # mkdir -p "${1%/*}" && touch "$@"
+    for f in "$@"; do
+        mkdir -p "${f%/*}"
+    done
+    touch "$@"
 }
 
 # list directory contents and print number of dotfiles if any
