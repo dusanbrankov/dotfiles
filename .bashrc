@@ -89,13 +89,13 @@ git_prompt() {
 if [ "$color_prompt" = yes ]; then
     PROMPT_DIRTRIM=2
     export PS1=''
-    PS1+='\[$(tput setaf 245)\]\u@\h\[$(tput sgr0)\] '
+    # PS1+='\[$(tput setaf 245)\]\u@\h\[$(tput sgr0)\] '
     PS1+='\[$(tput setaf 3)$(tput bold)\]\W\[$(tput sgr0)\] '
-    PS1+='$(git_prompt)'
+    PS1+='\[$(tput setaf 4)\]$(git_prompt)\[$(tput sgr0)\]'
     # PS1+="\[${red}\]"
     # PS1+='$(status=$?; (( status != 0 )) && echo " (${status})")'
     # PS1+="\[${reset}\]"
-    PS1+='\$ '
+    # PS1+='\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
