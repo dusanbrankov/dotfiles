@@ -156,8 +156,8 @@ endif
     nnoremap <leader>{ ciw{<esc>pa}<esc>
     nnoremap <leader>` ciw`<esc>pa`<esc>
     vnoremap ' <esc>a'<esc>`<i'<esc>
-    " vnoremap \" <esc>a"<esc>`<i"<esc>
-    " vnoremap ` <esc>`<i`<esc>`>a`<esc>
+    vnoremap \" <esc>a"<esc>`<i"<esc>
+    vnoremap ` <esc>`<i`<esc>`>a`<esc>
     vnoremap ` <esc>a`<esc>`<i`<esc>
     vnoremap ( <esc>a)<esc>`<i(<esc>
     vnoremap { <esc>a}<esc>`<i{<esc>
