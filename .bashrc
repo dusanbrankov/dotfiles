@@ -95,7 +95,7 @@ if [ "$color_prompt" = yes ]; then
     # PS1+="\[${red}\]"
     # PS1+='$(status=$?; (( status != 0 )) && echo " (${status})")'
     # PS1+="\[${reset}\]"
-    # PS1+='\$ '
+    PS1+='\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
