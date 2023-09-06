@@ -15,7 +15,9 @@ mkcd() {
 mkf() {
     # mkdir -p "${1%/*}" && touch "$@"
     for f in "$@"; do
-        mkdir -p "${f%/*}"
+        if [[ "$f" =~ / ]]; then
+            mkdir -p "${f%/*}"
+        fi
     done
     touch "$@"
 }
