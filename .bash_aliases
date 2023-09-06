@@ -69,5 +69,8 @@ alias bat='batcat'
 # show $PATH (replace ':' with new line)
 alias path='printf "%b" "${PATH//:/\\n}"'
 
+# show my public ip address
+alias whatsmyip='curl http://icanhazip.com'
+
 alias new-py='source new-py'
 alias stylebot='cat $HOME/dev/snippets/stylebot/stylebot.css'
