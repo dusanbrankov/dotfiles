@@ -42,6 +42,9 @@ alias nb='npm run build'
 
 # git
 alias ga='git add'
+alias gb='git branch'
+alias gbd='git branch -d'
+alias gbD='git branch -D'
 alias gc='git commit'
 alias gcm='git commit -m'
 alias gd='git diff'
@@ -50,6 +53,8 @@ alias gpl='git pull'
 alias gplr='git pull --rebase'
 alias gps='git push'
 alias gst='git status'
+alias gsw='git switch'
+alias gsc='git switch --create'
 
 # font-converter
 alias woffy='font-converter ft2wf'
