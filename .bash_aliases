@@ -26,6 +26,7 @@ alias h='history'
 alias hg='history | grep'
 alias i='sudo apt install'
 alias ui='sudo apt update && sudo apt install'
+alias uu='sudo apt update && sudo apt upgrade'
 alias j='jobs'
 alias v='vim'
 
