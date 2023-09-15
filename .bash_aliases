@@ -73,10 +73,11 @@ alias tldr='tldr -p linux'
 alias bat='batcat'
 
 # show $PATH (replace ':' with new line)
-alias path='printf "%b" "${PATH//:/\\n}"'
+alias path='printf "%b\n" "${PATH//:/\\n}"'
 
 # show my public ip address
 alias whatsmyip='curl http://icanhazip.com'
 
 alias new-py='source new-py'
 alias stylebot='cat $HOME/dev/snippets/stylebot/stylebot.css'
+alias tree='tree --dirsfirst'
