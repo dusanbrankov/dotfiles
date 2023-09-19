@@ -53,7 +53,7 @@ endif
 
 " Editor:
     " highlight current cursorline
-    set cursorline
+    " set cursorline
     " set an 80 column border for good coding style
     set cc=80
     " enable search highlighting
@@ -137,6 +137,11 @@ endif
     nnoremap <leader>O O<esc>
     " fold/unfold
     nnoremap zz za
+    " tabs
+    nnoremap <leader>tn :tabnew
+    nnoremap <leader>tc :tabclose<cr>
+    nnoremap <a-left> :tabprevious<cr>
+    nnoremap <a-right> :tabnext<cr>
 
 " Multiple_Modes:
     " Escape insert/visual mode
