@@ -74,28 +74,55 @@ if [ -n "$force_color_prompt" ]; then
 	# We have color support; assume it's compliant with Ecma-48
 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
 	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+	    color_prompt=yes
     else
-	color_prompt=
+	    color_prompt=
     fi
 fi
 
-git_prompt() {
+
+# Wrapping the tput output in '\[ \]' is recommended by the Bash man
+# page. This helps Bash ignore non-printable characters so that it
+# correctly calculates the size of the prompt.
+RED="\[$(tput setaf 1)\]"
+GREEN="\[$(tput setaf 2)\]"
+YELLOW="\[$(tput setaf 3)\]"
+BLUE="\[$(tput setaf 4)\]"
+WHITE="\[$(tput setaf 7)\]"
+GREY="\[$(tput setaf 245)\]"
+BOLD="\[$(tput bold)\]"
+RESET="\[$(tput sgr0)\]"
+
+function prompt {
+
+    local exit_code=$?
+
     local branch
     branch="$(git branch --show-current 2>/dev/null)"
-    [ -n "$branch" ] && echo "($branch) "
+
+    # PROMPT_DIRTRIM=2
+
+    # Terminal window title
+    PS1='\[\e]2;\u@\h:\w\a\]'
+
+    # Current directory
+    PS1+="${YELLOW}${BOLD}\W${RESET} "
+    # Git branch
+    [ -n "$branch" ] && PS1+="${BLUE}(${branch})${RESET} "
+    # Exit status
+    (( exit_code != 0 )) && PS1+="${RED}"
+
+    PS1+='\$ '
+    PS1+="${RESET}"
+
+    # Optionally change text input, e.g. color
+    # PS1+="$YELLOW"
+    # PS0="$NO_COLOR"
 }
 
+
 if [ "$color_prompt" = yes ]; then
-    PROMPT_DIRTRIM=2
-    export PS1=''
-    # PS1+='\[$(tput setaf 245)\]\u@\h\[$(tput sgr0)\] '
-    PS1+='\[$(tput setaf 3)$(tput bold)\]\W\[$(tput sgr0)\] '
-    PS1+='\[$(tput setaf 4)\]$(git_prompt)\[$(tput sgr0)\]'
-    # PS1+="\[${red}\]"
-    # PS1+='$(status=$?; (( status != 0 )) && echo " (${status})")'
-    # PS1+="\[${reset}\]"
-    PS1+='\$ '
+    export PROMPT_COMMAND=prompt
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
