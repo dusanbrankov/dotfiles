@@ -33,9 +33,11 @@ function ll
 {
     local current_dir=${1:-.}
     local dotfiles=("${current_dir%/}"/.[!.]*)
+
     if [ -e "${dotfiles[0]}" ]; then
         echo "$(tput bold)hidden files: ${#dotfiles[@]}$(tput sgr0)"
     fi
+
     ls -hls "$@"
 }
 
@@ -116,10 +118,12 @@ function copen
 
 # -----------------------------------------------
 # Compress and convert images to WebP and AVIF.
+#
 # Arguments:
-#   target directory, resize width
+# target directory, resize width
+#
 # Usage:
-#   img_convert DEST [<resize-width>]
+# img_convert DEST [<resize-width>]
 # -----------------------------------------------
 function img-convert
 {
@@ -166,7 +170,7 @@ function local-backup
     date="$(date +"%Y_%m_%d")"
 
     if [ ! -d "$path" ]; then
-        echo "Cannot find dest path: '$path'" >&2
+        echo "Path doesn't exist: '$path'" >&2
         return 1
     fi
 
@@ -229,4 +233,14 @@ function open_fzf_cwd
 function calc
 {
     awk "BEGIN {print \"The answer is: \" $* }";
+}
+
+# create bash script and open it in default editor
+# usage: mkbash <script name>
+function mkbash
+{
+    touch "$1"
+    chmod 744 "$1"
+    printf '#!/usr/bin/env bash\n\n' >"$1"
+    "$EDITOR" "$1"
 }
