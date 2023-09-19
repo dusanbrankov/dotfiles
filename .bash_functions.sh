@@ -244,3 +244,25 @@ function mkbash
     printf '#!/usr/bin/env bash\n\n' >"$1"
     "$EDITOR" "$1"
 }
+
+# git add and commit in one go
+# usage: git-ac <file1> <file2>... 'commit message'
+function gitac
+{
+    local args args_num
+    args=("$@")
+    args_num=$(($# - 1))
+
+    for ((i = 0; i < args_num; i++)); do
+
+        if [ ! -f "${args[i]}" ]; then
+            echo "${args[i]} does not exist" >&2
+            return 1
+        fi
+
+        git add --verbose "${args[i]}"
+
+    done
+
+    git commit --message="${args[-1]}"
+}
