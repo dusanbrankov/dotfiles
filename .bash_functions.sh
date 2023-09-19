@@ -61,7 +61,7 @@ function ldd
 }
 
 
-function heat
+function cheat
 {
     curl https://cheat.sh/"$1"
 }
