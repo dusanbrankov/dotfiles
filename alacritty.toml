@@ -1,13 +1,10 @@
-keyboard.bindings = [
-    { key = "Up", mods = "Control | Shift", action = "Up" }
-]
-
-colors.draw_bold_text_with_bright_colors = false
+# https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd
 
 [window]
 title = "Alacritty"
-padding = { x = 4, y = 4 }
-# decorations = "None"
+padding = { x = 8, y = 4 }
+decorations = "Full"
+opacity = 1.0
 
 [env]
 TERM = "xterm-256color"
@@ -18,6 +15,9 @@ bold = { family = "Fira Code", style = "Bold" }
 size = 11
 offset = { x = 0, y = 3 }
 glyph_offset = { x = 0, y = 1 }
+
+[colors]
+draw_bold_text_with_bright_colors = false
 
 [colors.primary]
 foreground = "#d2d2d2"
@@ -33,7 +33,19 @@ magenta = "#aa92ad"
 cyan = "#85b3b3"
 white = "#d7d5cf"
 
-[cursor.style]
-shape = "block"
-blinking = "off"
+[colors.cursor]
+text = "CellBackground"
+cursor = "CellForeground"
+
+[cursor]
+style = { shape = "block", blinking = "never" }
+# blink_interval = 750
+
+[keyboard]
+bindings = [
+    { key = "Up", mods = "Control | Shift", action = "ScrollLineUp" },
+    { key = "Down", mods = "Control | Shift", action = "ScrollLineDown" },
+    { key = "F", mods = "Control | Shift", action = "ToggleFullScreen" },
+    { key = "V", mods = "Control | Shift", action = "ToggleViMode" }
+]
 
