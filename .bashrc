@@ -10,6 +10,9 @@ case $- in
       *) return;;
 esac
 
+# enable Vi mode
+set -o vi
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth:erasedups
@@ -117,7 +120,7 @@ function prompt {
 
     # Optionally change text input, e.g. color
     # PS1+="$YELLOW"
-    # PS0="$NO_COLOR"
+    # PS0="$RESET"
 }
 
 
