@@ -46,6 +46,6 @@ bindings = [
     { key = "Up", mods = "Control | Shift", action = "ScrollLineUp" },
     { key = "Down", mods = "Control | Shift", action = "ScrollLineDown" },
     { key = "F", mods = "Control | Shift", action = "ToggleFullScreen" },
-    { key = "V", mods = "Control | Shift", action = "ToggleViMode" }
+    { key = "A", mods = "Control | Shift", action = "ToggleViMode" }
 ]
 
