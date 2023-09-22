@@ -109,9 +109,18 @@ function set-title
 # create file (and directories) and open file in vs code
 function copen
 {
-    [[ "$1" = */* ]] && mkdir -p "${1%/*}"
+    if [[ -e $1 ]]; then
+        echo "File already exists" >&2
+        return 1
+    fi
+
+    [[ $1 == */* ]] && mkdir -p "${1%/*}"
     # mkdir -p "$(dirname "$1")"
+
     touch "$1"
+
+    [[ $1 == *.php ]] && echo '<?php' > "$1"
+
     code -r "$1"
 }
 
