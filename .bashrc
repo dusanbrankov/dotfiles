@@ -44,8 +44,9 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
-# set default editor
-export EDITOR='/usr/bin/vim'
+# set default applications
+export EDITOR=/usr/bin/vim
+export BROWSER=/usr/bin/firefox-esr
 
 # key bindings
 bind '"\C-f":"cd_fzf\n"'
