@@ -1,3 +1,7 @@
+# allow running aliases with sudo
+alias sudo='sudo '
+
+# general
 alias brc='$EDITOR $HOME/.bashrc'
 alias src='. $HOME/.bashrc'
 alias a='$EDITOR $HOME/.bash_aliases'
@@ -21,6 +25,7 @@ alias -- -='cd -'
 alias la='ls -hlsaA'
 alias l1='ls -1'
 
+# short aliases for quick access
 alias c='clear'
 alias h='history'
 alias hg='history | grep'
@@ -29,6 +34,10 @@ alias ui='sudo apt update && sudo apt install'
 alias uu='sudo apt update && sudo apt upgrade'
 alias j='jobs'
 alias v='vim'
+
+# bookmarks
+alias gtnotes='cd ~/Documents/notes'
+alias gtphp='cd /var/www/html'
 
 alias st='speedtest'
 alias open='xdg-open'
