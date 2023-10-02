@@ -125,7 +125,8 @@ endif
     nnoremap <leader>sv :source $MYVIMRC<cr>
     nnoremap <leader>w :w<cr>
     nnoremap <leader>x :x<cr>
-    nnoremap <leader>q :q!<cr>
+    nnoremap <leader>q :q<cr>
+    nnoremap <leader>Q :q!<cr>
     nnoremap <c-a> 0
     nnoremap <c-w> ^
     nnoremap <c-e> $
@@ -161,7 +162,7 @@ endif
     nnoremap <leader>{ ciw{<esc>pa}<esc>
     nnoremap <leader>` ciw`<esc>pa`<esc>
     vnoremap ' <esc>a'<esc>`<i'<esc>
-    vnoremap \" <esc>a"<esc>`<i"<esc>
+    vnoremap " <esc>a"<esc>`<i"<esc>
     vnoremap ` <esc>`<i`<esc>`>a`<esc>
     vnoremap ` <esc>a`<esc>`<i`<esc>
     vnoremap ( <esc>a)<esc>`<i(<esc>
@@ -245,6 +246,8 @@ endif
     augroup filetype_javascript
         autocmd!
         autocmd FileType javascript nnoremap <buffer> <localleader>r :wa<cr>:!clear && node %<cr>
+        autocmd FileType javascript nnoremap <buffer> <localleader>c ^i// <esc>
+        autocmd FileType javascript nnoremap <buffer> <localleader>w :wa<cr>:!page-reload<cr><cr>
 
 " }}}
 
