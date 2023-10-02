@@ -255,7 +255,7 @@ function mkbash
 }
 
 # git add and commit in one go
-# usage: git-ac <file1> <file2>... 'commit message'
+# usage: gitac <file1> <file2>... 'commit message'
 function gitac
 {
     local args args_num
@@ -274,4 +274,42 @@ function gitac
     done
 
     git commit --message="${args[-1]}"
+}
+
+# create new php project
+# usage: mkphp <project_name>
+function mkphp
+{
+    if (( $# == 0 )); then
+        echo 'Missing argument' >&2
+        return 1
+    fi
+
+    local project="$1"
+    local editor=${2:-code}
+    local path="/var/www/html/$project"
+    local skel="$HOME/dev/skel/web/php"
+    local window
+    window="$(xdotool getactivewindow)"
+
+    sudo mkdir "$path" || return 1
+    sudo chown "$USER":www-data "$path"
+    sudo chmod g+s "$path"
+    sudo chmod o-rwx "$path"
+    cp -r "$skel"/* "$path"
+    cd "$path" || return 1
+
+    xdotool search 'Mozilla Firefox' \
+            windowactivate --sync \
+            key --clearmodifiers CTRL+t \
+            type "http://localhost/$project"
+    xdotool windowfocus --sync "$window"
+    xdotool windowactivate --sync "$window"
+    xdotool search 'Mozilla Firefox' \
+            windowactivate --sync \
+            key Return
+    xdotool windowfocus --sync "$window"
+    xdotool windowactivate --sync "$window"
+
+    "$editor" "$path"
 }
