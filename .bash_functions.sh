@@ -313,3 +313,11 @@ function mkphp
 
     "$editor" "$path"
 }
+
+function mkphpdir
+{
+    local path=/var/www/html/"$1"
+    sudo mkdir "$path" || return 1
+    sudo chown "$USER": "$path"
+    cd "$path" || return 1
+}
