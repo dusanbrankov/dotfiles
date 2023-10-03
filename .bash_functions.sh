@@ -321,3 +321,10 @@ function mkphpdir
     sudo chown "$USER": "$path"
     cd "$path" || return 1
 }
+
+function chwebroot
+{
+    local config_file='/etc/apache2/sites-available/000-default.conf'
+    sudo sed -iE 's:DocumentRoot /var/www/html.*:DocumentRoot /var/www/html/'"${1:-}"':' "$config_file"
+    sudo systemctl restart apache2
+}
