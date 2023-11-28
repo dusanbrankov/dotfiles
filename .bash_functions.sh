@@ -351,4 +351,10 @@ function rsd {
     local cur
     cur="$(units EUR RSD | grep -Eo '[0-9]{3}\.[0-9]{2}')"
     echo "1.00 EUR = $cur RSD"
+
+function shwebroot
+{
+    local config_file='/etc/apache2/sites-available/000-default.conf'
+    grep -Eo 'DocumentRoot\s+(\w|-|/)+' "$config_file" \
+        | cut --delimiter=' ' --fields=2
 }

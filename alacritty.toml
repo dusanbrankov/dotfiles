@@ -25,7 +25,8 @@ background = "#252323"
 
 [colors.normal]
 black = "#111213"
-red = "#ff9f9f"
+# red = "#ff9f9f"
+red = "#bf4a4a"
 green = "#8ea77b"
 yellow = "#d4bf7e"
 blue = "#8ba3b3"
