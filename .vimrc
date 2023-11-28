@@ -251,5 +251,10 @@ endif
         autocmd FileType javascript nnoremap <buffer> <localleader>c ^i// <esc>
         autocmd FileType javascript nnoremap <buffer> <localleader>w :wa<cr>:!page-reload<cr><cr>
 
+    augroup filetype_php
+        autocmd!
+        autocmd FileType php nnoremap <buffer> <localleader>r :wa<cr>:!clear && php %<cr>
 " }}}
 
+packadd YouCompleteMe
+let g:javascript_plugin_jsdoc = 1
