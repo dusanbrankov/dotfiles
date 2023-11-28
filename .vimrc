@@ -146,6 +146,8 @@ endif
 
 " Multiple_Modes:
     " Escape insert/visual mode
+    inoremap ff <esc><right>
+    vnoremap ff <esc>
     inoremap <ctrl-c> <esc><right>
     vnoremap <ctrl-c> <esc>
 
