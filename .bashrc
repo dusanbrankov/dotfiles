@@ -84,25 +84,22 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-
-# Wrapping the tput output in '\[ \]' is recommended by the Bash man
-# page. This helps Bash ignore non-printable characters so that it
-# correctly calculates the size of the prompt.
-RED="\[$(tput setaf 1)\]"
-GREEN="\[$(tput setaf 2)\]"
-YELLOW="\[$(tput setaf 3)\]"
-BLUE="\[$(tput setaf 4)\]"
-WHITE="\[$(tput setaf 7)\]"
-GREY="\[$(tput setaf 245)\]"
-BOLD="\[$(tput bold)\]"
-RESET="\[$(tput sgr0)\]"
-
 function prompt {
-
     local exit_code=$?
+
+    local white clr_dir clr_branch clr_error clr_clear
+    white="\[$(tput setaf 7)\]"
+    bold="\[$(tput bold)\]"
+    clr_dir="\[$(tput setaf 3)\]"
+    clr_branch="\[$(tput setaf 4)\]"
+    clr_error="\[$(tput setaf 1)\]"
+    clr_clear="\[$(tput sgr0)\]"
 
     local branch
     branch="$(git branch --show-current 2>/dev/null)"
+
+    local cwd
+    cwd="$(pwd)"
 
     # PROMPT_DIRTRIM=2
 
@@ -110,18 +107,20 @@ function prompt {
     PS1='\[\e]2;\u@\h:\w\a\]'
 
     # Current directory
-    PS1+="${YELLOW}${BOLD}\W${RESET} "
+    # [ "$cwd" != "$HOME" ] &&
+    PS1+="${clr_dir}\W${clr_clear} "
     # Git branch
-    [ -n "$branch" ] && PS1+="${BLUE}(${branch})${RESET} "
+    [ -n "$branch" ] && PS1+="${clr_branch}(${branch})${clr_clear} "
     # Exit status
-    (( exit_code != 0 )) && PS1+="${RED}"
+    (( exit_code != 0 )) && PS1+="${clr_error}"
 
     PS1+='\$ '
-    PS1+="${RESET}"
+    PS1+="${clr_clear}"
 
     # Optionally change text input, e.g. color
-    # PS1+="$YELLOW"
-    # PS0="$RESET"
+    # PS1+="$clr_dir"
+    # PS0="$clr_clear"
+    # PS0="\n"
 }
 
 
