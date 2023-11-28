@@ -27,6 +27,22 @@ function mkf
     touch "$@"
 }
 
+function mkcp
+{
+    local args args_last_index last_arg dest new_filename
+    args=("$@")
+    args_last_index=$(("${#args[@]}" - 1 ))
+    last_arg="${args[-1]}"
+    dest="${last_arg%/*}"
+    new_filename="${last_arg##*/}"
+
+    mkdir -p "$dest"
+
+    for i in "${!args[@]}"; do
+        (( i == args_last_index )) && break
+        cp "${args[$i]}" "$dest/${new_filename}" || return 1
+    done
+}
 
 # ls -l with info about number of hidden files
 function ll
