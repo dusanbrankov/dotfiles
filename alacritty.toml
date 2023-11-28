@@ -36,6 +36,7 @@ white = "#d7d5cf"
 [colors.cursor]
 text = "CellBackground"
 cursor = "CellForeground"
+# cursor = "#5fd7af"
 
 [cursor]
 style = { shape = "block", blinking = "never" }
