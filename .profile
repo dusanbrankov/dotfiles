@@ -21,3 +21,5 @@ fi
 # https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally
 [ -d "$HOME/.npm-global/bin" ] && PATH="$HOME/.npm-global/bin:$PATH"
 
+composer="$HOME/.config/composer/vendor/bin"
+[ -d "$composer" ] && PATH="$composer:$PATH"
