@@ -328,3 +328,10 @@ function chwebroot
     sudo sed -iE 's:DocumentRoot /var/www/html.*:DocumentRoot /var/www/html/'"${1:-}"':' "$config_file"
     sudo systemctl restart apache2
 }
+
+function shwebroot
+{
+    local config_file='/etc/apache2/sites-available/000-default.conf'
+    grep -Eo 'DocumentRoot\s+(\w|-|/)+' "$config_file" \
+        | cut --delimiter=' ' --fields=2
+}
