@@ -72,6 +72,7 @@ alias woffy='font-converter ft2wf'
 # freetube
 alias ftweb='freetube https://www.youtube.com/playlist?list=PLWZ_T9JHHIpPh8jKzVVHvVChrbYfVwEKe'
 alias ftlinux='freetube https://youtube.com/playlist?list=PLWZ_T9JHHIpPPdH0haqui_81AEPNB_3rE'
+alias ftcli='freetube https://youtube.com/playlist?list=PLWZ_T9JHHIpNzApoYVuLgtzLraADY7Zh9&si=es_gasLr7cruR-YB'
 
 # more shortcuts
 alias md='glow'
