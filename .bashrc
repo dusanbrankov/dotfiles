@@ -110,7 +110,7 @@ function prompt {
     PS1='\[\e]2;\u@\h:\w\a\]'
 
     # Current directory
-    PS1+="${YELLOW}${BOLD}\W${RESET} "
+    PS1+="${YELLOW}\W${RESET} "
     # Git branch
     [ -n "$branch" ] && PS1+="${BLUE}(${branch})${RESET} "
     # Exit status
@@ -145,7 +145,7 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto --group-directories-first'
+    alias ls='ls -F --group-directories-first'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 fi
