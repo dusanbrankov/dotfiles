@@ -371,7 +371,7 @@ function gh-repo-create {
     curl -L \
          -X POST \
          -H "Accept: application/vnd.github+json" \
-         -H "Authorization: Bearer $token" \
+         -H "Authorization: Bearer $GH_TOKEN" \
          -H "X-GitHub-Api-Version: 2022-11-28" \
          https://api.github.com/user/repos \
          -d "{\"name\":\"$repo_name\",\"description\":\"$repo_desc\",\"homepage\":\"https://github.com\",\"private\":$repo_is_private,\"is_template\":false}"
