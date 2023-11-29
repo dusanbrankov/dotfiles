@@ -90,13 +90,16 @@ fi
 function prompt {
     local exit_code=$?
 
-    local white clr_dir clr_branch clr_error clr_clear
+    local white clr_dir clr_branch clr_error clr_clear bold clr_branch underline clr_user
     white="\[$(tput setaf 7)\]"
     bold="\[$(tput bold)\]"
     clr_dir="\[$(tput setaf 3)\]"
-    clr_branch="\[$(tput setaf 4)\]"
+    clr_branch="\[$(tput setaf 245)\]"
+    clr_dollar="\[$(tput setaf 2)\]"
     clr_error="\[$(tput setaf 1)\]"
     clr_clear="\[$(tput sgr0)\]"
+    underline="\[$(tput smul)\]"
+    clr_user="\[$(tput setaf 4)\]"
 
     local branch
     branch="$(git branch --show-current 2>/dev/null)"
@@ -109,13 +112,23 @@ function prompt {
     # Terminal window title
     PS1='\[\e]2;\u@\h:\w\a\]'
 
+    # User
+    # PS1+="${clr_user}${bold}\u${clr_clear} "
+
     # Current directory
     # [ "$cwd" != "$HOME" ] &&
-    PS1+="${clr_dir}\W${clr_clear} "
+    PS1+="${clr_dir}${bold}\W${clr_clear} "
+
     # Git branch
-    [ -n "$branch" ] && PS1+="${clr_branch}(${branch})${clr_clear} "
+    [ -n "$branch" ] && PS1+="${clr_branch}${branch}${clr_clear} "
+    PS1+="${bold}"
+
     # Exit status
-    (( exit_code != 0 )) && PS1+="${clr_error}"
+    if (( exit_code != 0 )); then
+        PS1+="${clr_error}"
+    else
+        PS1+="${clr_dollar}"
+    fi
 
     PS1+='\$ '
     PS1+="${clr_clear}"

@@ -2,7 +2,8 @@
 
 [window]
 title = "Alacritty"
-padding = { x = 8, y = 4 }
+padding = { x = 12, y = 12 }
+dynamic_padding = true
 decorations = "Full"
 opacity = 1.0
 
@@ -13,8 +14,8 @@ TERM = "xterm-256color"
 normal = { family = "Fira Code", style = "Regular" }
 bold = { family = "Fira Code", style = "Bold" }
 size = 11
-offset = { x = 0, y = 3 }
-glyph_offset = { x = 0, y = 1 }
+offset = { x = 0, y = 6 }
+glyph_offset = { x = 0, y = 2 }
 
 [colors]
 draw_bold_text_with_bright_colors = false
@@ -25,8 +26,7 @@ background = "#252323"
 
 [colors.normal]
 black = "#111213"
-# red = "#ff9f9f"
-red = "#bf4a4a"
+red = "#bb443a"
 green = "#8ea77b"
 yellow = "#d4bf7e"
 blue = "#8ba3b3"
