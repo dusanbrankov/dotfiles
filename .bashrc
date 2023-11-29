@@ -30,6 +30,9 @@ HISTIGNORE="h:history:history :exit:clear:c:..:...:cd"
 # Base directories for cd command
 CDPATH=.:~:~/Documents/guides
 
+# Custom environment variables
+GH_TOKEN="$(awk -F '=' '/GH_TOKEN/ {print $2}' .env)"
+
 # Change directory without cd command
 shopt -s autocd
 
