@@ -351,10 +351,59 @@ function rsd {
     local cur
     cur="$(units EUR RSD | grep -Eo '[0-9]{3}\.[0-9]{2}')"
     echo "1.00 EUR = $cur RSD"
+}
 
 function shwebroot
 {
     local config_file='/etc/apache2/sites-available/000-default.conf'
     grep -Eo 'DocumentRoot\s+(\w|-|/)+' "$config_file" \
         | cut --delimiter=' ' --fields=2
+}
+
+# Create a Github repo
+# Usage: gh-repo-create <repo_name>
+# Doc: https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-for-the-authenticated-user
+function gh-repo-create {
+    read -rp 'Name: ' repo_name
+    read -rp 'Description: ' repo_desc
+    read -rp 'Private (true/false): ' repo_is_private
+
+    curl -L \
+         -X POST \
+         -H "Accept: application/vnd.github+json" \
+         -H "Authorization: Bearer $token" \
+         -H "X-GitHub-Api-Version: 2022-11-28" \
+         https://api.github.com/user/repos \
+         -d "{\"name\":\"$repo_name\",\"description\":\"$repo_desc\",\"homepage\":\"https://github.com\",\"private\":$repo_is_private,\"is_template\":false}"
+}
+
+# Delete a Github repository
+# Usage: gh-repo-del <repo-name>
+function gh-repo-del {
+    curl -L \
+         -X DELETE \
+         -H "Accept: application/vnd.github+json" \
+         -H "Authorization: Bearer $GH_TOKEN" \
+         -H "X-GitHub-Api-Version: 2022-11-28" \
+         https://api.github.com/repos/dusanbrankov/"$1"
+}
+
+# This is equivalent to 'git mv file_from file_to'
+# Usage: command <current-filemame> <old-filename>
+function git-update-filename {
+    # mv README.md README
+    git rm "$2"
+    git add "$1"
+}
+
+# Append file(s) to the last commit
+# Usage: command <file>...
+function git-append {
+    local args=("$@")
+
+    for file in "${args[@]}"; do
+        git add "$file"
+    done
+
+    git commit --amend
 }
