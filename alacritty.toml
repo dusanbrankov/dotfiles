@@ -43,6 +43,9 @@ cursor = "CellForeground"
 style = { shape = "block", blinking = "never" }
 # blink_interval = 750
 
+[mouse]
+hide_when_typing = true
+
 [keyboard]
 bindings = [
     { key = "Up", mods = "Control | Shift", action = "ScrollLineUp" },
