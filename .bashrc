@@ -52,8 +52,8 @@ export EDITOR=/usr/bin/vim
 export BROWSER=/usr/bin/firefox-esr
 
 # key bindings
-bind '"\C-f":"cd_fzf\n"'
-# bind -x '"\C-f":"cd_fzf"'
+# bind '"\C-f":"cd_fzf\n"'
+bind -x '"\C-f":"cd_fzf"'
 bind -x '"\C-g":"cd_fzf_cwd"'
 bind -x '"\C-o":"open_fzf"'
 bind -x '"\C-p":"open_fzf_cwd"'
@@ -197,25 +197,23 @@ done
 
 source /usr/share/doc/fzf/examples/key-bindings.bash
 
-fzf[multi]='--multi'
-fzf[reverse]='--reverse'
-fzf[cycle]='--cycle'
-fzf[border]='--border=none'
-fzf[prompt]='--prompt=→ '
-fzf[pointer]='--pointer= '
-fzf[marker]='--marker=* '
-fzf[color]='--color=dark,fg+:white,fg:white,bg+:-1,marker:red,info:grey'
-fzf[height]='--height=90%'
-fzf[min_height]='--min-height=10'
-fzf[padding]='--padding=0,8%,13%,3%'
-fzf[preview]='--preview=git diff $@ --color=always -- {-1}'
-fzf[preview_window]="--preview-window=${fzf_preview_hidden:-}border-sharp"
-fzf[bind_preview]='--bind=ctrl-p:toggle-preview'
-fzf[bind_select]='--bind=ctrl-a:select-all,ctrl-d:deselect-all'
+# fzf[multi]='--multi'
+# fzf[reverse]='--reverse'
+# fzf[cycle]='--cycle'
+# fzf[border]='--border=none'
+# fzf[prompt]='--prompt=→ '
+# fzf[pointer]='--pointer= '
+# fzf[marker]='--marker=* '
+# fzf[color]='--color=dark,fg+:white,fg:white,bg+:-1,marker:red,info:grey'
+# fzf[height]='--height=90%'
+# fzf[min_height]='--min-height=10'
+# fzf[padding]='--padding=0,8%,13%,3%'
+# fzf[preview]='--preview=git diff $@ --color=always -- {-1}'
+# fzf[preview_window]="--preview-window=${fzf_preview_hidden:-}border-sharp"
+# fzf[bind_preview]='--bind=ctrl-p:toggle-preview'
+# fzf[bind_select]='--bind=ctrl-a:select-all,ctrl-d:deselect-all'
 
 # export FZF_DEFAULT_COMMAND='fd . --hidden'
 # export FZF_DEFAULT_OPTS="${fzf[@]}"
-export FZF_DEFAULT_OPTS="--cycle --prompt='→ ' --pointer=' ' --border=sharp --color=fg+:white,fg:247,bg+:-1,prompt:white,info:grey"
-
-[ -f "$HOME/.config/gg/.env_variables" ] && . "$HOME/.config/gg/.env_variables"
+export FZF_DEFAULT_OPTS="--reverse --cycle --prompt='→ ' --pointer=' ' --border=sharp --color=fg+:white,fg:247,bg+:-1,prompt:white,info:grey"
 
