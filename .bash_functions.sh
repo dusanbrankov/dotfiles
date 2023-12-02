@@ -1,23 +1,18 @@
 # shellcheck shell=bash
 
 
-function cd
-{
+function cd {
     builtin cd "$@" >/dev/null || return 1
 }
 
-
-function mkcd
-{
+function mkcd {
     mkdir -p "$1" && builtin cd "$1" || return 1
 }
-
 
 # create direcotires and files in one command
 # info: the dirname command in Linux prints a file path with its final component
 # removed. this basically gives you the directory path from the file path.
-function mkf
-{
+function mkf {
     # mkdir -p "${1%/*}" && touch "$@"
 
     for f in "$@"; do
@@ -27,8 +22,7 @@ function mkf
     touch "$@"
 }
 
-function mkcp
-{
+function mkcp {
     local args args_last_index last_arg dest new_filename
     args=("$@")
     args_last_index=$(("${#args[@]}" - 1 ))
@@ -44,9 +38,8 @@ function mkcp
     done
 }
 
-# ls -l with info about number of hidden files
-function ll
-{
+# ls -l with displaying number of hidden files
+function ll {
     local current_dir=${1:-.}
     local dotfiles=("${current_dir%/}"/.[!.]*)
 
@@ -57,62 +50,53 @@ function ll
     ls -hls "$@"
 }
 
-
 # list hidden files and directories
-function ld
-{
-    ls -dl .[!.]* 2>/dev/null
+function ld {
+    # ls -dl .[!.]* 2>/dev/null
+    ls -al "${1:-.}" | awk '$NF ~ /^\.[^\.\/]/ {print}'
 }
-
 
 # list only hidden files
-function ldf
-{
-    ls -pdl .[!.]* | grep -v '/$' 2>/dev/null
+function ldf {
+    # ls -pdl .[!.]* | grep -v '/$' 2>/dev/null
+    ls -al "${1:-.}" | awk '$1 !~ /^d/ && $NF ~ /^\.[^\.\/]/ {print}'
 }
-
 
 # list only hidden directories
-function ldd
-{
-    ls -dl .[!.]*/ 2>/dev/null
+function ldd {
+    # ls -dl .[!.]*/ 2>/dev/null
+    ls -al "${1:-.}" | awk '$1 ~ /^d/ && $NF ~ /^\.[^\.\/]/ {print}'
 }
 
-
-function cheat
-{
+function cheat {
     curl https://cheat.sh/"$1"
 }
 
+function showcolors {
+    local num="${1:-255}"
 
-function showcolors
-{
-    for code in {1..255}; do
-        echo "$code: $(tput setaf "$code";)\
-              The quick brown fox jumped over the lazy dog.\
-              $(tput sgr0)"
+    for code in $(seq $num); do
+       echo "$code: $(tput setaf "$code";)\
+             The quick brown fox jumped over the lazy dog.\
+             $(tput sgr0)"
     done
 }
 
-
 # Go to recent project
-function gtp
-{
+function gtp {
     local path
     path="$HOME/dev/projects/web"
 
     local project
     project="$(find "$path" -mindepth 1 -maxdepth 1 -type d \
-               -printf "%TY-%Tm-%Td\t%f\n" \
-               | sort -r | cut -f "2" | head -n1)"
+               -printf "%TY-%Tm-%Td\t%f\n" | \
+               sort -r | cut -f "2" | head -n1)"
 
     cd "$path/$project" || return 1
 }
 
-
 # rename tab in terminal
-function set-title
-{
+function set-title {
     if [[ -z "$ORIG" ]]; then
         ORIG=$PS1
     fi
@@ -121,10 +105,8 @@ function set-title
     PS1=${ORIG}${TITLE}
 }
 
-
 # create file (and directories) and open file in vs code
-function copen
-{
+function copen {
     if [[ -e $1 ]]; then
         echo "File already exists" >&2
         return 1
@@ -140,7 +122,6 @@ function copen
     code -r "$1"
 }
 
-
 # -----------------------------------------------
 # Compress and convert images to WebP and AVIF.
 #
@@ -150,8 +131,7 @@ function copen
 # Usage:
 # img_convert DEST [<resize-width>]
 # -----------------------------------------------
-function img-convert
-{
+function img-convert {
     local dir="$1"
     local orig_dir="original_images"
 
@@ -185,9 +165,7 @@ function img-convert
     done
 }
 
-
-function local-backup
-{
+function local-backup {
     local path
     path='/media/dbran/HardDisk27491/backup'
 
@@ -205,75 +183,81 @@ function local-backup
         2> >(tee "$HOME/Documents/backups/my_backup/backup_error_$date.log")
 }
 
-
 # cd with fuzzy finder
 # Usage: <ctrl-f>
-function cd_fzf
-{
-    cd "$(fd -td --hidden --absolute-path --base-directory "$HOME" \
-        | fzf --exact \
-        --preview="tree -L 1 {}" \
-        --bind="space:toggle-preview" \
-        --preview-window=:hidden)" || return 1
+function cd_fzf {
+    cd "$(\
+        fd \
+            --type directory \
+            --hidden \
+            --absolute-path \
+            --base-directory "$HOME" | \
+        fzf \
+            --preview="tree -L 1 {}" \
+            --bind="ctrl-space:toggle-preview" \
+    )" || return 1
 }
-
 
 # cd with fuzzy finder (cwd as startig point)
 # Usage: <ctrl-g>
-function cd_fzf_cwd
-{
-    cd "$(fd -td --hidden --absolute-path --strip-cwd-prefix \
-        | fzf --exact \
-        --preview="tree -L 1 {}" \
-        --bind="space:toggle-preview" \
-        --preview-window=:hidden)" || return 1
+function cd_fzf_cwd {
+    cd "$(\
+        fd \
+            --type directory \
+            --strip-cwd-prefix | \
+        fzf \
+            --preview="tree -L 1 {}" \
+            --bind="ctrl-space:toggle-preview" \
+            --preview-window=:hidden\
+    )" || return 1
 }
-
 
 # open document with fuzzy finder
 # Usage: <ctrl-o>
-function open_fzf
-{
-    $EDITOR "$(fd -tf --hidden --ignore --absolute-path --base-directory "$HOME" \
-        | fzf --exact \
-        --preview="cat {}" \
-        --bind="space:toggle-preview" \
-        --preview-window=:hidden)"
+function open_fzf {
+    "${EDITOR:-vim}" "$(\
+        fd \
+            --type file \
+            --hidden \
+            --absolute-path \
+            --base-directory "$HOME" | \
+        fzf \
+            --preview="batcat --color=always {}" \
+            --bind="ctrl-space:toggle-preview" \
+    )"
 }
-
 
 # open document with fuzzy finder (cwd as starting point)
 # Usage: <ctrl-p>
-function open_fzf_cwd
-{
-    $EDITOR "$(fd -tf --hidden --ignore --strip-cwd-prefix \
-        | fzf --exact \
-        --preview="cat {}" \
-        --bind="space:toggle-preview" \
-        --preview-window=:hidden)"
+function open_fzf_cwd {
+    "${EDITOR:-vim}" "$(\
+        fd \
+            --type file \
+            --hidden \
+            --strip-cwd-prefix \
+        | fzf --exact --cycle \
+            --preview="batcat --color=always {}" \
+            --bind="ctrl-space:toggle-preview" \
+    )"
 }
 
-
 # sample usage: calc '(2 + 3) / 2'
-function calc
-{
-    awk "BEGIN {print \"The answer is: \" $* }";
+function calc {
+    awk "BEGIN {print \"result: \" $* }";
 }
 
 # create bash script and open it in default editor
 # usage: mkbash <script name>
-function mkbash
-{
+function mkbash {
     touch "$1"
     chmod 744 "$1"
     printf '#!/usr/bin/env bash\n\n' >"$1"
-    "$EDITOR" "$1"
+    "${EDITOR:-vim}" "$1"
 }
 
 # git add and commit in one go
 # usage: gitac <file1> <file2>... 'commit message'
-function gitac
-{
+function gitac {
     local args args_num
     args=("$@")
     args_num=$(($# - 1))
@@ -294,15 +278,14 @@ function gitac
 
 # create new php project
 # usage: mkphp <project_name>
-function mkphp
-{
+function mkphp {
     if (( $# == 0 )); then
         echo 'Missing argument' >&2
         return 1
     fi
 
     local project="$1"
-    local editor=${2:-code}
+    local editor="${2:-code}"
     local path="/var/www/html/$project"
     local skel="$HOME/dev/skel/web/php"
     local window
@@ -330,16 +313,14 @@ function mkphp
     "$editor" "$path"
 }
 
-function mkphpdir
-{
+function mkphpdir {
     local path=/var/www/html/"$1"
     sudo mkdir "$path" || return 1
     sudo chown "$USER": "$path"
     cd "$path" || return 1
 }
 
-function chwebroot
-{
+function chwebroot {
     local config_file='/etc/apache2/sites-available/000-default.conf'
 
     sudo sed -iE 's:DocumentRoot /var/www/html.*:DocumentRoot /var/www/html/'"${1:-}"':' "$config_file"
@@ -353,8 +334,7 @@ function rsd {
     echo "1.00 EUR = $cur RSD"
 }
 
-function shwebroot
-{
+function shwebroot {
     local config_file='/etc/apache2/sites-available/000-default.conf'
     grep -Eo 'DocumentRoot\s+(\w|-|/)+' "$config_file" \
         | cut --delimiter=' ' --fields=2
