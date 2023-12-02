@@ -1,13 +1,14 @@
 # allow running aliases with sudo
 alias sudo='sudo '
 
-# general
+# dotfiles
 alias brc='$EDITOR $HOME/.bashrc'
 alias src='. $HOME/.bashrc'
 alias a='$EDITOR $HOME/.bash_aliases'
 alias f='$EDITOR $HOME/.bash_functions.sh'
 alias vrc='$EDITOR $HOME/.vimrc'
 alias ac='$EDITOR $HOME/.config/alacritty/alacritty.toml'
+alias tc='$EDITOR $HOME/.tmux.conf'
 
 # colorize stdout
 alias grep='grep --color=auto'
@@ -25,8 +26,9 @@ alias -- -='cd -'
 alias la='ls -hlsaA'
 alias l1='ls -1'
 
-# short aliases for quick access
+# shortcuts
 alias c='clear'
+alias e='exit'
 alias h='history'
 alias hg='history | grep'
 alias i='sudo apt install'
@@ -43,6 +45,7 @@ alias st='speedtest'
 alias open='xdg-open'
 
 # rmdir, mkdir etc.
+alias mv='mv -i'
 alias mkp='mkdir -p'
 alias rmr='rm -r'
 
@@ -89,5 +92,9 @@ alias path='printf "%b\n" "${PATH//:/\\n}"'
 alias whatsmyip='curl http://icanhazip.com'
 
 alias new-py='source new-py'
-alias stylebot='cat $HOME/dev/snippets/stylebot/stylebot.css'
+alias stylebot='xclip -sel clip  $HOME/dev/snippets/stylebot/stylebot.css'
 alias tree='tree --dirsfirst'
+
+# fd
+alias fdignore='vim ~/.config/fd/ignore'
+alias gitignore='vim ~/.config/git/ignore'
