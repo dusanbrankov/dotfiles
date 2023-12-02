@@ -113,8 +113,8 @@ endif
     noremap <a-down> :m .+1<cr>==
 
     " duplicate line
-    noremap <c-up> YP
-    noremap <c-down> Yp
+    " noremap <c-up> YP
+    " noremap <c-down> Yp
 
     " comment
     noremap <leader>c :s/^/# /<cr>
@@ -140,9 +140,12 @@ endif
     nnoremap zz za
     " tabs
     nnoremap <leader>tn :tabnew
+    nnoremap <leader>tN :tabnew<cr>
     nnoremap <leader>tc :tabclose<cr>
-    nnoremap <a-left> :tabprevious<cr>
-    nnoremap <a-right> :tabnext<cr>
+    nnoremap <leader><left> :tabprevious<cr>
+    nnoremap <leader><right> :tabnext<cr>
+
+    nnoremap <leader>E :Files!<cr>
 
 " Multiple_Modes:
     " Escape insert/visual mode
@@ -258,3 +261,13 @@ endif
 
 packadd YouCompleteMe
 let g:javascript_plugin_jsdoc = 1
+
+call plug#begin()
+
+" fzf native plugin
+Plug 'junegunn/fzf'
+" fzf.vim
+Plug 'junegunn/fzf.vim'
+
+call plug#end()
+
