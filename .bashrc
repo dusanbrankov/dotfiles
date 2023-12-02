@@ -25,13 +25,13 @@ HISTSIZE=5000
 HISTFILESIZE=5000
 
 HISTTIMEFORMAT="%Y/%m/%d %H:%M "
-HISTIGNORE="h:history:history :exit:clear:c:..:...:cd"
+HISTIGNORE="h:history:history :exit:clear:c:..:...:cd:fg"
 
 # Base directories for cd command
 CDPATH=.:~:~/Documents/guides
 
 # Custom environment variables
-GH_TOKEN="$(awk -F '=' '/GH_TOKEN/ {print $2}' "$HOME/dotfiles/.env")"
+export GH_TOKEN="$(awk -F '=' '/GH_TOKEN/ {print $2}' "$HOME/dotfiles/.env")"
 
 # Change directory without cd command
 shopt -s autocd
@@ -53,10 +53,11 @@ export BROWSER=/usr/bin/firefox-esr
 
 # key bindings
 bind '"\C-f":"cd_fzf\n"'
-bind '"\C-g":"cd_fzf_cwd\n"'
-bind '"\C-o":"open_fzf\n"'
-bind '"\C-p":"open_fzf_cwd\n"'
-bind '"\ez":"fg\n"'
+# bind -x '"\C-f":"cd_fzf"'
+bind -x '"\C-g":"cd_fzf_cwd"'
+bind -x '"\C-o":"open_fzf"'
+bind -x '"\C-p":"open_fzf_cwd"'
+bind -x '"\ez":"fg"'
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -100,6 +101,10 @@ function prompt {
     clr_clear="\[$(tput sgr0)\]"
     underline="\[$(tput smul)\]"
     clr_user="\[$(tput setaf 4)\]"
+
+    if [[ $(hostname) != laptop ]]; then
+        clr_dir="\[$(tput setaf 4)\]"
+    fi
 
     local branch
     branch="$(git branch --show-current 2>/dev/null)"
@@ -190,4 +195,27 @@ for f in "${src_files[@]}"; do
     [ -f "${HOME}/${f}" ] && . "${HOME}/${f}"
 done
 
+source /usr/share/doc/fzf/examples/key-bindings.bash
+
+fzf[multi]='--multi'
+fzf[reverse]='--reverse'
+fzf[cycle]='--cycle'
+fzf[border]='--border=none'
+fzf[prompt]='--prompt=→ '
+fzf[pointer]='--pointer= '
+fzf[marker]='--marker=* '
+fzf[color]='--color=dark,fg+:white,fg:white,bg+:-1,marker:red,info:grey'
+fzf[height]='--height=90%'
+fzf[min_height]='--min-height=10'
+fzf[padding]='--padding=0,8%,13%,3%'
+fzf[preview]='--preview=git diff $@ --color=always -- {-1}'
+fzf[preview_window]="--preview-window=${fzf_preview_hidden:-}border-sharp"
+fzf[bind_preview]='--bind=ctrl-p:toggle-preview'
+fzf[bind_select]='--bind=ctrl-a:select-all,ctrl-d:deselect-all'
+
+# export FZF_DEFAULT_COMMAND='fd . --hidden'
+# export FZF_DEFAULT_OPTS="${fzf[@]}"
+export FZF_DEFAULT_OPTS="--cycle --prompt='→ ' --pointer=' ' --border=sharp --color=fg+:white,fg:247,bg+:-1,prompt:white,info:grey"
+
+[ -f "$HOME/.config/gg/.env_variables" ] && . "$HOME/.config/gg/.env_variables"
 
