@@ -52,9 +52,8 @@ export EDITOR=/usr/bin/vim
 export BROWSER=/usr/bin/firefox-esr
 
 # key bindings
-# bind '"\C-f":"cd_fzf\n"'
-bind -x '"\C-f":"cd_fzf"'
-bind -x '"\C-g":"cd_fzf_cwd"'
+bind '"\C-f":"cd_fzf\n"'
+bind '"\C-g":"cd_fzf_cwd\n"'
 bind -x '"\C-o":"open_fzf"'
 bind -x '"\C-p":"open_fzf_cwd"'
 bind -x '"\ez":"fg"'
@@ -197,10 +196,9 @@ done
 
 source /usr/share/doc/fzf/examples/key-bindings.bash
 
-# fzf[multi]='--multi'
 # fzf[reverse]='--reverse'
 # fzf[cycle]='--cycle'
-# fzf[border]='--border=none'
+# fzf[border]='--border=sharp'
 # fzf[prompt]='--prompt=→ '
 # fzf[pointer]='--pointer= '
 # fzf[marker]='--marker=* '
@@ -213,7 +211,14 @@ source /usr/share/doc/fzf/examples/key-bindings.bash
 # fzf[bind_preview]='--bind=ctrl-p:toggle-preview'
 # fzf[bind_select]='--bind=ctrl-a:select-all,ctrl-d:deselect-all'
 
-# export FZF_DEFAULT_COMMAND='fd . --hidden'
-# export FZF_DEFAULT_OPTS="${fzf[@]}"
-export FZF_DEFAULT_OPTS="--reverse --cycle --prompt='→ ' --pointer=' ' --border=sharp --color=fg+:white,fg:247,bg+:-1,prompt:white,info:grey"
+window_width=$(tput cols)
+
+if (( window_width < 90 )); then
+    fzf_preview_hidden='hidden,'
+fi
+
+export FZF_DEFAULT_COMMAND='fdfind . --hidden --strip-cwd-prefix'
+export FZF_DEFAULT_OPTS="--layout=reverse-list --cycle --prompt='→ ' --pointer=' ' --border=sharp --preview-window=${fzf_preview_hidden:-}border-none --color=fg+:white,fg:247,bg+:-1,prompt:white,info:grey --bind=ctrl-u:clear-query --height=65%"
+
+export FZF_CTRL_T_COMMAND='fd . --hidden --strip-cwd-prefix'
 

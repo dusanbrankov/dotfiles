@@ -1,18 +1,17 @@
 # shellcheck shell=bash
 
-
-function cd {
+cd() {
     builtin cd "$@" >/dev/null || return 1
 }
 
-function mkcd {
+mkcd() {
     mkdir -p "$1" && builtin cd "$1" || return 1
 }
 
 # create direcotires and files in one command
 # info: the dirname command in Linux prints a file path with its final component
 # removed. this basically gives you the directory path from the file path.
-function mkf {
+mkf() {
     # mkdir -p "${1%/*}" && touch "$@"
 
     for f in "$@"; do
@@ -22,7 +21,7 @@ function mkf {
     touch "$@"
 }
 
-function mkcp {
+mkcp() {
     local args args_last_index last_arg dest new_filename
     args=("$@")
     args_last_index=$(("${#args[@]}" - 1 ))
@@ -39,7 +38,7 @@ function mkcp {
 }
 
 # ls -l with displaying number of hidden files
-function ll {
+ll() {
     local current_dir=${1:-.}
     local dotfiles=("${current_dir%/}"/.[!.]*)
 
@@ -51,28 +50,28 @@ function ll {
 }
 
 # list hidden files and directories
-function ld {
+ld() {
     # ls -dl .[!.]* 2>/dev/null
     ls -al "${1:-.}" | awk '$NF ~ /^\.[^\.\/]/ {print}'
 }
 
 # list only hidden files
-function ldf {
+ldf() {
     # ls -pdl .[!.]* | grep -v '/$' 2>/dev/null
     ls -al "${1:-.}" | awk '$1 !~ /^d/ && $NF ~ /^\.[^\.\/]/ {print}'
 }
 
 # list only hidden directories
-function ldd {
+ldd() {
     # ls -dl .[!.]*/ 2>/dev/null
     ls -al "${1:-.}" | awk '$1 ~ /^d/ && $NF ~ /^\.[^\.\/]/ {print}'
 }
 
-function cheat {
-    curl https://cheat.sh/"$1"
+cheat() {
+    curl "https://cheat.sh/$1"
 }
 
-function showcolors {
+showcolors() {
     local num="${1:-255}"
 
     for code in $(seq $num); do
@@ -83,7 +82,7 @@ function showcolors {
 }
 
 # Go to recent project
-function gtp {
+gtp() {
     local path
     path="$HOME/dev/projects/web"
 
@@ -96,7 +95,7 @@ function gtp {
 }
 
 # rename tab in terminal
-function set-title {
+set-title() {
     if [[ -z "$ORIG" ]]; then
         ORIG=$PS1
     fi
@@ -106,7 +105,7 @@ function set-title {
 }
 
 # create file (and directories) and open file in vs code
-function copen {
+copen() {
     if [[ -e $1 ]]; then
         echo "File already exists" >&2
         return 1
@@ -131,7 +130,7 @@ function copen {
 # Usage:
 # img_convert DEST [<resize-width>]
 # -----------------------------------------------
-function img-convert {
+img-convert() {
     local dir="$1"
     local orig_dir="original_images"
 
@@ -165,7 +164,7 @@ function img-convert {
     done
 }
 
-function local-backup {
+local-backup() {
     local path
     path='/media/dbran/HardDisk27491/backup'
 
@@ -185,7 +184,7 @@ function local-backup {
 
 # cd with fuzzy finder
 # Usage: <ctrl-f>
-function cd_fzf {
+cd_fzf() {
     cd "$(\
         fd \
             --type directory \
@@ -193,19 +192,21 @@ function cd_fzf {
             --absolute-path \
             --base-directory "$HOME" | \
         fzf \
+            --exact \
             --preview="tree -L 1 {}" \
             --bind="ctrl-space:toggle-preview" \
     )" || return 1
 }
 
 # cd with fuzzy finder (cwd as startig point)
-# Usage: <ctrl-g>
-function cd_fzf_cwd {
+# Usage: cc [path]
+cc() {
     cd "$(\
-        fd \
+        fd "${1:-.}" \
             --type directory \
             --strip-cwd-prefix | \
         fzf \
+            --exact \
             --preview="tree -L 1 {}" \
             --bind="ctrl-space:toggle-preview" \
             --preview-window=:hidden\
@@ -214,41 +215,36 @@ function cd_fzf_cwd {
 
 # open document with fuzzy finder
 # Usage: <ctrl-o>
-function open_fzf {
-    "${EDITOR:-vim}" "$(\
-        fd \
-            --type file \
-            --hidden \
-            --absolute-path \
-            --base-directory "$HOME" | \
-        fzf \
-            --preview="batcat --color=always {}" \
-            --bind="ctrl-space:toggle-preview" \
-    )"
+open_fzf() {
+    local target
+
+    target="$(fzf --exact --select-1 --exit-0)"
+
+    if [ -n "$target" ]; then
+        "${EDITOR:-vim}" "$target"
+    fi
 }
 
 # open document with fuzzy finder (cwd as starting point)
 # Usage: <ctrl-p>
-function open_fzf_cwd {
-    "${EDITOR:-vim}" "$(\
-        fd \
-            --type file \
-            --hidden \
-            --strip-cwd-prefix \
-        | fzf --exact --cycle \
-            --preview="batcat --color=always {}" \
-            --bind="ctrl-space:toggle-preview" \
-    )"
+open_fzf_cwd() {
+    local target
+
+    target="$(fd --strip-cwd-prefix | fzf --exact --select-1 --exit-0)"
+
+    if [ -n "$target" ]; then
+        "${EDITOR:-vim}" "$target"
+    fi
 }
 
 # sample usage: calc '(2 + 3) / 2'
-function calc {
+calc() {
     awk "BEGIN {print \"result: \" $* }";
 }
 
 # create bash script and open it in default editor
 # usage: mkbash <script name>
-function mkbash {
+mkbash() {
     touch "$1"
     chmod 744 "$1"
     printf '#!/usr/bin/env bash\n\n' >"$1"
@@ -257,7 +253,7 @@ function mkbash {
 
 # git add and commit in one go
 # usage: gitac <file1> <file2>... 'commit message'
-function gitac {
+gitac() {
     local args args_num
     args=("$@")
     args_num=$(($# - 1))
@@ -278,7 +274,7 @@ function gitac {
 
 # create new php project
 # usage: mkphp <project_name>
-function mkphp {
+mkphp() {
     if (( $# == 0 )); then
         echo 'Missing argument' >&2
         return 1
@@ -313,14 +309,14 @@ function mkphp {
     "$editor" "$path"
 }
 
-function mkphpdir {
+mkphpdir() {
     local path=/var/www/html/"$1"
     sudo mkdir "$path" || return 1
     sudo chown "$USER": "$path"
     cd "$path" || return 1
 }
 
-function chwebroot {
+chwebroot() {
     local config_file='/etc/apache2/sites-available/000-default.conf'
 
     sudo sed -iE 's:DocumentRoot /var/www/html.*:DocumentRoot /var/www/html/'"${1:-}"':' "$config_file"
@@ -328,13 +324,13 @@ function chwebroot {
     sudo systemctl restart apache2
 }
 
-function rsd {
+rsd() {
     local cur
     cur="$(units EUR RSD | grep -Eo '[0-9]{3}\.[0-9]{2}')"
     echo "1.00 EUR = $cur RSD"
 }
 
-function shwebroot {
+shwebroot() {
     local config_file='/etc/apache2/sites-available/000-default.conf'
     grep -Eo 'DocumentRoot\s+(\w|-|/)+' "$config_file" \
         | cut --delimiter=' ' --fields=2
@@ -343,7 +339,7 @@ function shwebroot {
 # Create a Github repo
 # Usage: gh-repo-create <repo_name>
 # Doc: https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#create-a-repository-for-the-authenticated-user
-function gh-repo-create {
+gh-repo-create() {
     read -rp 'Name: ' repo_name
     read -rp 'Description: ' repo_desc
     read -rp 'Private (true/false): ' repo_is_private
@@ -359,7 +355,7 @@ function gh-repo-create {
 
 # Delete a Github repository
 # Usage: gh-repo-del <repo-name>
-function gh-repo-del {
+gh-repo-del() {
     curl -L \
          -X DELETE \
          -H "Accept: application/vnd.github+json" \
@@ -370,7 +366,7 @@ function gh-repo-del {
 
 # This is equivalent to 'git mv file_from file_to'
 # Usage: command <current-filemame> <old-filename>
-function git-update-filename {
+git-update-filename() {
     # mv README.md README
     git rm "$2"
     git add "$1"
@@ -378,12 +374,7 @@ function git-update-filename {
 
 # Append file(s) to the last commit
 # Usage: command <file>...
-function git-append {
-    local args=("$@")
-
-    for file in "${args[@]}"; do
-        git add "$file"
-    done
-
+git-append() {
+    git add "$@"
     git commit --amend
 }
