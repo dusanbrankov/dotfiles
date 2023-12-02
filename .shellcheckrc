@@ -1,1 +1,4 @@
 external-sources=true
+disable=SC2154
+disable=SC2148
+disable=SC2016
