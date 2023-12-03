@@ -74,7 +74,7 @@ cheat() {
 showcolors() {
     local num="${1:-255}"
 
-    for code in $(seq $num); do
+    for code in $(seq "$num"); do
        echo "$code: $(tput setaf "$code";)\
              The quick brown fox jumped over the lazy dog.\
              $(tput sgr0)"
@@ -185,56 +185,65 @@ local-backup() {
 # cd with fuzzy finder
 # Usage: <ctrl-f>
 cd_fzf() {
-    cd "$(\
-        fd \
-            --type directory \
-            --hidden \
-            --absolute-path \
-            --base-directory "$HOME" | \
-        fzf \
-            --exact \
-            --preview="tree -L 1 {}" \
-            --bind="ctrl-space:toggle-preview" \
-    )" || return 1
+    local fd_options=(
+        --type directory
+        --hidden
+        --absolute-path
+        --base-directory "$HOME"
+    )
+
+    local fzf_options=(
+        --exact
+        --preview='tree -L 1 {}'
+        --bind=ctrl-space:toggle-preview
+    )
+
+    cd "$(fd "${fd_options[@]}" | fzf "${fzf_options[@]}")" || return 1
 }
 
-# cd with fuzzy finder (cwd as startig point)
+# cc - cd with fuzzy finder
 # Usage: cc [path]
+#
+# Examples:
+#     Use current directory as starting point:
+#         $ cc
+#     Use another directory as starting point:
+#         $ cc ~/Downloads
 cc() {
-    cd "$(\
-        fd "${1:-.}" \
-            --type directory \
-            --strip-cwd-prefix | \
-        fzf \
-            --exact \
-            --preview="tree -L 1 {}" \
-            --bind="ctrl-space:toggle-preview" \
-            --preview-window=:hidden\
-    )" || return 1
+    local fd_options fzf_options target
+
+    fd_options=(
+        --hidden
+    )
+
+    fzf_options=(
+        --exact
+        --preview='tree -L 1 {}'
+        --bind=ctrl-space:toggle-preview
+        --exit-0
+    )
+
+    target="$(fd . "${1:-.}" "${fd_options[@]}" | fzf "${fzf_options[@]}")"
+
+    test -f "$target" && target="${target%/*}"
+
+    cd "$target" || return 1
 }
 
-# open document with fuzzy finder
+# Open document with fuzzy finder ($HOME as starting point)
 # Usage: <ctrl-o>
 open_fzf() {
     local target
-
     target="$(fzf --exact --select-1 --exit-0)"
-
-    if [ -n "$target" ]; then
-        "${EDITOR:-vim}" "$target"
-    fi
+    test -n "$target" && "${EDITOR:-vim}" "$target"
 }
 
-# open document with fuzzy finder (cwd as starting point)
+# Open document with fuzzy finder (cwd as starting point)
 # Usage: <ctrl-p>
 open_fzf_cwd() {
     local target
-
     target="$(fd --strip-cwd-prefix | fzf --exact --select-1 --exit-0)"
-
-    if [ -n "$target" ]; then
-        "${EDITOR:-vim}" "$target"
-    fi
+    test -n "$target" && "${EDITOR:-vim}" "$target"
 }
 
 # sample usage: calc '(2 + 3) / 2'
@@ -383,4 +392,8 @@ git-append() {
     if [ -z "$up_to_date" ]; then
         git push --force
     fi
+}
+
+penv() {
+    printenv | fzf
 }

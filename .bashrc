@@ -53,7 +53,6 @@ export BROWSER=/usr/bin/firefox-esr
 
 # key bindings
 bind '"\C-f":"cd_fzf\n"'
-bind '"\C-g":"cd_fzf_cwd\n"'
 bind -x '"\C-o":"open_fzf"'
 bind -x '"\C-p":"open_fzf_cwd"'
 bind -x '"\ez":"fg"'
@@ -217,11 +216,23 @@ source /usr/share/doc/fzf/examples/key-bindings.bash
 window_width=$(tput cols)
 
 if (( window_width < 90 )); then
-    fzf_preview_hidden='hidden,'
+    __fzf_preview_window_pos=bottom
 fi
 
 export FZF_DEFAULT_COMMAND='fdfind . --hidden --strip-cwd-prefix'
-export FZF_DEFAULT_OPTS="--layout=reverse-list --cycle --prompt='→ ' --pointer=' ' --border=sharp --preview-window=${fzf_preview_hidden:-}border-none --color=fg+:white,fg:247,bg+:-1,prompt:white,info:grey --bind=ctrl-u:clear-query --height=65%"
+export FZF_DEFAULT_OPTS="
+    --layout=reverse-list
+    --cycle
+    --prompt='→ '
+    --pointer=' '
+    --border=sharp
+    --preview-window=${fzf_preview_window_pos:-right},border-none
+    --color=fg+:white,fg:247,bg+:-1,prompt:white,info:grey
+    --bind=ctrl-u:clear-query
+    --bind=ctrl-space:toggle-preview
+    --height=65%"
 
-export FZF_CTRL_T_COMMAND='fd . --hidden --strip-cwd-prefix'
-
+export FZF_CTRL_T_COMMAND='fdfind . --hidden --strip-cwd-prefix'
+export FZF_CTRL_T_OPTS="
+    --preview 'batcat -n --color always {}'
+    --preview-window=${__fzf_preview_window_pos:-right}"
