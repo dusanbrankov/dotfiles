@@ -58,6 +58,9 @@ bind -x '"\C-o":"open_fzf"'
 bind -x '"\C-p":"open_fzf_cwd"'
 bind -x '"\ez":"fg"'
 
+open_dir() { vim . ; }
+bind -x '"\C-l":"open_dir"'
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
