@@ -377,4 +377,10 @@ git-update-filename() {
 git-append() {
     git add "$@"
     git commit --amend
+
+    up_to_date="$(git fetch)"
+
+    if [ -z "$up_to_date" ]; then
+        git push --force
+    fi
 }
