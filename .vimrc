@@ -145,7 +145,7 @@ endif
     nnoremap <leader><left> :tabprevious<cr>
     nnoremap <leader><right> :tabnext<cr>
 
-    nnoremap <leader>E :Files!<cr>
+    nnoremap <leader>ee :Files!<cr>
 
 " Multiple_Modes:
     " Escape insert/visual mode
