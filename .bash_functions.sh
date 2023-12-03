@@ -234,7 +234,7 @@ cc() {
 # Usage: <ctrl-o>
 open_fzf() {
     local target
-    target="$(fzf --exact --select-1 --exit-0)"
+    target="$(fd --hidden --base-directory "$HOME" | fzf --exact --exit-0)"
     test -n "$target" && "${EDITOR:-vim}" "$target"
 }
 
@@ -242,7 +242,7 @@ open_fzf() {
 # Usage: <ctrl-p>
 open_fzf_cwd() {
     local target
-    target="$(fd --strip-cwd-prefix | fzf --exact --select-1 --exit-0)"
+    target="$(fd --strip-cwd-prefix | fzf --exact --exit-0)"
     test -n "$target" && "${EDITOR:-vim}" "$target"
 }
 
