@@ -269,5 +269,7 @@ Plug 'junegunn/fzf'
 " fzf.vim
 Plug 'junegunn/fzf.vim'
 
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
 call plug#end()
 
