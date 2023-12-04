@@ -12,29 +12,25 @@
 # Load .bashrc if running bash
 # ----------------------------------------------------------------------- #
 
-if [ -n "$BASH_VERSION" ] && [ -r "$HOME/.bashrc" ]; then
-    . "$HOME/.bashrc"
+bashrc="$HOME/.config/bash/bashrc"
+
+if [[ -v BASH_VERSION && -r "$bashrc" ]]; then
+    source "$bashrc"
 fi
 
 # Add user's bin directories to PATH
 # ----------------------------------------------------------------------- #
 
-set -- ".local/bin" "bin" ".npm-global/bin" ".config/composer/vendor/bin"
+bin_dirs=(
+ ".local/bin"
+ "bin"
+ ".npm-global/bin"
+ ".config/composer/vendor/bin"
+)
 
-for bin in "$@"; do
-    [ -d "$HOME/$bin" ] && export PATH="$HOME/$bin:$PATH"
+for bin in "${bin_dirs[@]}"; do
+ [ -d "$HOME/$bin" ] && export PATH="$HOME/$bin:$PATH"
 done
-
-# bin_dirs=(
-#     ".local/bin"
-#     "bin"
-#     ".npm-global/bin"
-#     ".config/composer/vendor/bin"
-# )
-#
-# for bin in "${bin_dirs[@]}"; do
-#     [ -d "$HOME/$bin" ] && export PATH="$HOME/$bin:$PATH"
-# done
 
 
 # ======================================================================= #

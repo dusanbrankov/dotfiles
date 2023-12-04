@@ -1,0 +1,115 @@
+# ======================================================================= #
+# Bash aliases
+
+# Shell
+# ----------------------------------------------------------------------- #
+# Show $PATH (replace ':' with new line)
+alias path='printf "%b\n" "${PATH//:/\\n}"'
+
+# Overwrite default
+# ----------------------------------------------------------------------- #
+# Set default options for commonly used commands
+alias ls='ls -F --group-directories-first'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias mv='mv -i'
+
+# Allow running aliases with sudo
+alias sudo='sudo '
+
+# ...more
+alias tree='tree --dirsfirst'
+
+# Files and directories
+# ----------------------------------------------------------------------- #
+# cd shortcuts
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias -- -='cd -'
+
+# ls shortcuts
+alias la='ls -hlsaA'
+alias l1='ls -1'
+
+# rmdir, mkdir etc.
+alias mkp='mkdir -p'
+alias rmr='rm -r'
+
+# Bookmarks
+alias gtnotes='cd ~/Documents/notes'
+alias gtphp='cd /var/www/html'
+
+# Dotfiles
+# ----------------------------------------------------------------------- #
+# Source config file
+alias brc='$EDITOR $HOME/.config/bash/bashrc'
+alias src='source $HOME/.config/bash/bashrc'
+alias vrc='$EDITOR $HOME/.vim/vimrc'
+
+# Open config file
+alias a='$EDITOR $HOME/.config/bash/aliases'
+alias f='$EDITOR $HOME/.config/bash/functions'
+alias ac='$EDITOR $HOME/.config/alacritty/alacritty.toml'
+alias tc='$EDITOR $HOME/.config/tmux/tmux.conf'
+alias gitignore='vim ~/.config/git/ignore'
+alias fdignore='vim ~/.config/fd/ignore'
+
+# Quick execution
+# ----------------------------------------------------------------------- #
+alias c='clear'
+alias e='exit'
+alias h='history'
+alias hg='history | grep'
+alias i='sudo apt install'
+alias ui='sudo apt update && sudo apt install'
+alias uu='sudo apt update && sudo apt upgrade'
+alias j='jobs'
+alias v='vim'
+
+alias st='speedtest'
+alias open='xdg-open'
+
+# External commands
+# ----------------------------------------------------------------------- #
+# npm
+alias ns='npm start'
+alias nb='npm run build'
+
+# Git
+alias ga='git add'
+alias gb='git branch'
+alias gbd='git branch -d'
+alias gbD='git branch -D'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gd='git diff'
+alias gl='git log --stat --relative-date'
+alias gpl='git pull'
+alias gplr='git pull --rebase'
+alias gps='git push'
+alias gst='git status'
+alias gsw='git switch'
+alias gsc='git switch --create'
+
+# Font Converter
+alias woffy='font-converter ft2wf'
+
+# Freetube
+alias ftweb='freetube https://www.youtube.com/playlist?list=PLWZ_T9JHHIpPh8jKzVVHvVChrbYfVwEKe'
+alias ftlinux='freetube https://youtube.com/playlist?list=PLWZ_T9JHHIpPPdH0haqui_81AEPNB_3rE'
+alias ftcli='freetube https://youtube.com/playlist?list=PLWZ_T9JHHIpNzApoYVuLgtzLraADY7Zh9&si=es_gasLr7cruR-YB'
+
+# ...more
+alias bat='batcat'
+alias md='glow'
+alias fd='fdfind'
+alias tldr='tldr -p linux'
+
+# Internet, browser etc.
+# ----------------------------------------------------------------------- #
+alias whatsmyip='curl http://icanhazip.com'
+alias stylebot='xclip -sel clip  $HOME/dev/snippets/stylebot/stylebot.css'
+

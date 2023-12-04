@@ -31,7 +31,7 @@ endif
     " fold based on indent
     set foldmethod=marker
     " Use system clipboard as register
-    set clipboard=unnamedplus
+    set clipboard=unnamed,unnamedplus
 
 " Indentation:
     " number of columns occupied by a tab
@@ -153,6 +153,9 @@ endif
     vnoremap ff <esc>
     inoremap <ctrl-c> <esc><right>
     vnoremap <ctrl-c> <esc>
+
+    " Copy text to system clipboard
+    " vnoremap y "*y
 
     " Indent text
     vnoremap <s-tab> <gv

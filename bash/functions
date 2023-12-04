@@ -234,7 +234,8 @@ cc() {
 # Usage: <ctrl-o>
 open_fzf() {
     local target
-    target="$(fd --hidden --base-directory "$HOME" | fzf --exact --exit-0)"
+
+    target="$(fd --hidden --absolute-path --base-directory "$HOME" | fzf --exact --exit-0)"
     test -n "$target" && "${EDITOR:-vim}" "$target"
 }
 
@@ -242,7 +243,7 @@ open_fzf() {
 # Usage: <ctrl-p>
 open_fzf_cwd() {
     local target
-    target="$(fd --strip-cwd-prefix | fzf --exact --exit-0)"
+    target="$(fd --hidden --strip-cwd-prefix | fzf --exact --exit-0)"
     test -n "$target" && "${EDITOR:-vim}" "$target"
 }
 
@@ -394,6 +395,25 @@ git-append() {
     fi
 }
 
-penv() {
+fenv() {
     printenv | fzf
 }
+
+flink() {
+    tmux capture-pane -J -p | \
+        grep -Eo '(https?):\/\/[^ ]+' | \
+        fzf-tmux -d20 --multi --bind alt-a:select-all,alt-d:deselect-all | \
+        xargs open
+}
+
+fhelp() {
+    local args cmd section
+
+    mapfile -t -d " " args < <(apropos "$@" | fzf | grep -Eo '^.+ \([0-9]+\)' | sed 's/[()]//g')
+
+    cmd="${args[0]}"
+    section="${args[1]}"
+
+    (( ${#args} > 0 )) && man $section $cmd
+}
+
