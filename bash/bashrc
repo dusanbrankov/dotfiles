@@ -83,22 +83,27 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+PROMPT_DIRTRIM=2
+
 prompt() {
     local exit_code=$?
 
     local white clr_dir clr_branch clr_error clr_clear bold clr_branch underline clr_user
     white="\[$(tput setaf 7)\]"
     bold="\[$(tput bold)\]"
-    clr_dir="\[$(tput setaf 3)\]"
+    # clr_dir="\[$(tput setaf 66)\]"
+    clr_dir="\[$(tput setaf 109)\]"
+    clr_dir="\[$(tput setaf 138)\]"
     clr_branch="\[$(tput setaf 245)\]"
     clr_dollar="\[$(tput setaf 2)\]"
     clr_error="\[$(tput setaf 1)\]"
     clr_clear="\[$(tput sgr0)\]"
     underline="\[$(tput smul)\]"
-    clr_user="\[$(tput setaf 4)\]"
+    clr_user="\[$(tput setaf 66)\]"
 
-    if [[ $(hostname) != laptop ]]; then
-        clr_dir="\[$(tput setaf 4)\]"
+    # if [[ $(hostname) != laptop ]]; then
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+        clr_dir="\[$(tput setaf 109)\]"
     fi
 
     local branch
@@ -107,26 +112,22 @@ prompt() {
     local cwd
     cwd="$(pwd)"
 
-    # PROMPT_DIRTRIM=2
 
     # Terminal window title
     PS1='\[\e]2;\u@\h:\w\a\]'
 
     # User
-    # PS1+="${clr_user}${bold}\u${clr_clear} "
+    # PS1+="${clr_user}\u${clr_clear} "
 
     # Current directory
-    PS1+="${clr_dir}${bold}\W${clr_clear} "
+    PS1+="${clr_dir}\W${clr_clear} "
 
     # Git branch
     [ -n "$branch" ] && PS1+="${clr_branch}${branch}${clr_clear} "
-    PS1+="${bold}"
 
     # Exit status
     if (( exit_code != 0 )); then
         PS1+="${clr_error}"
-    else
-        PS1+="${clr_dollar}"
     fi
 
     PS1+='\$ '
