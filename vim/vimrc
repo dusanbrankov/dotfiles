@@ -30,8 +30,10 @@ endif
     set ttimeoutlen=100
     " fold based on indent
     set foldmethod=marker
-    " Use system clipboard as register
+    " use system clipboard as register
     set clipboard=unnamed,unnamedplus
+    " don't create swp files
+    set noswapfile
 
 " Indentation:
     " number of columns occupied by a tab
