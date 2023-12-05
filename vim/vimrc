@@ -278,3 +278,11 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 call plug#end()
 
+augroup twig_ft
+  au!
+  autocmd BufNewFile,BufRead ~/dotfiles/bash/functions set syntax=bash
+augroup END
+augroup twig_ft
+  au!
+  autocmd BufNewFile,BufRead ~/dotfiles/bash/aliases set syntax=bash
+augroup END
