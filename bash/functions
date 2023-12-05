@@ -1,5 +1,3 @@
-# shellcheck shell=bash
-
 cd() {
     builtin cd "$@" >/dev/null || return 1
 }
@@ -417,3 +415,6 @@ fhelp() {
     (( ${#args} > 0 )) && man $section $cmd
 }
 
+apts() {
+    apt search ^"$*"
+}
