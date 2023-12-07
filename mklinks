@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+shopt -s extglob dotglob nullglob
+
+dotfiles="$HOME/dotfiles/home"
+
+# unlink broken link files
+find "$HOME"{,/.config} -maxdepth 2 -xtype l -exec unlink '{}' \;
+
+# (re)create symbolic links
+for f in "$dotfiles"/*; do
+    if [ -d "$f" ]; then
+        dest="$HOME/${f##*/}"
+        mkdir -p "$dest"
+        ln -sriv "$f"/* "$dest"
+    else
+        ln -siv "$f" "$HOME"
+    fi
+done
+
