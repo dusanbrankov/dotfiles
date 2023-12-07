@@ -1,5 +1,5 @@
 shell="$(readlink -f /proc/$$/exe)"
-bashrc="$HOME/.config/bash/bashrc"
+bashrc="$HOME/.bashrc"
 
 # load .bashrc if running bash
 if [[ "${shell##*/}" == "bash" && -r "$bashrc" ]]; then
