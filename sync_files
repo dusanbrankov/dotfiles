@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+git_fetch="$(git fetch)"
+git_status="$(git status --porcelain)"
+
+if [[ -z "$git_fetch" && -z "$git_status" ]]; then
+    git pull
+    yes | ./mklinks
+fi
+
