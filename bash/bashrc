@@ -43,7 +43,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-shopt -s globstar
+shopt -s globstar nullglob
 
 # key bindings
 bind '"\C-f":"cd_fzf\n"'
@@ -85,63 +85,62 @@ fi
 
 PROMPT_DIRTRIM=2
 
+red="\[$(tput setaf 1)\]"
+green="\[$(tput setaf 2)\]"
+yellow="\[$(tput setaf 3)\]"
+blue="\[$(tput setaf 4)\]"
+purple="\[$(tput setaf 5)\]"
+cyan="\[$(tput setaf 6)\]"
+white="\[$(tput setaf 7)\]"
+grey="\[$(tput setaf 245)\]"
+bold="\[$(tput bold)\]"
+underline="\[$(tput smul)\]"
+rst="\[$(tput sgr0)\]"
+
 prompt() {
     local exit_code=$?
 
-    local white clr_dir clr_branch clr_error clr_clear bold clr_branch underline clr_user
-    white="\[$(tput setaf 7)\]"
-    bold="\[$(tput bold)\]"
-    # clr_dir="\[$(tput setaf 66)\]"
-    clr_dir="\[$(tput setaf 109)\]"
-    clr_dir="\[$(tput setaf 138)\]"
+    local clr_dir clr_branch clr_user
+    # clr_dir="\[$(tput setaf 138)\]"
+    # clr_dir="\[$(tput setaf 146)\]"
+    clr_dir="\[$(tput setaf 187)\]"
+    clr_ssh="\[$(tput setaf 109)\]"
     clr_branch="\[$(tput setaf 245)\]"
-    clr_dollar="\[$(tput setaf 2)\]"
-    clr_error="\[$(tput setaf 1)\]"
-    clr_clear="\[$(tput sgr0)\]"
-    underline="\[$(tput smul)\]"
     clr_user="\[$(tput setaf 66)\]"
-
-    # if [[ $(hostname) != laptop ]]; then
-    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-        clr_dir="\[$(tput setaf 109)\]"
-    fi
 
     local branch
     branch="$(git branch --show-current 2>/dev/null)"
 
-    local cwd
-    cwd="$(pwd)"
-
-
-    # Terminal window title
+    # terminal window title
     PS1='\[\e]2;\u@\h:\w\a\]'
 
-    # User
-    # PS1+="${clr_user}\u${clr_clear} "
+    # user
+    # PS1+="${clr_user}\u${rst} "
 
-    # Current directory
-    PS1+="${clr_dir}\W${clr_clear} "
-
-    # Git branch
-    [ -n "$branch" ] && PS1+="${clr_branch}${branch}${clr_clear} "
-
-    # Exit status
-    if (( exit_code != 0 )); then
-        PS1+="${clr_error}"
+    if [[ -n $SSH_CLIENT || -n $SSH_TTY ]]; then
+        clr_dir="$clr_ssh"
     fi
 
-    PS1+='\$ '
-    PS1+="${clr_clear}"
+    # current directory
+    PS1+="${clr_dir}\W${rst} "
 
-    # Optionally change text input, e.g. color
-    # PS1+="$clr_dir"
-    # PS0="$clr_clear"
-    # PS0="\n"
+    # git branch
+    test -n "$branch" && PS1+="${clr_branch}${branch}${rst} "
+
+    # exit status
+    (( exit_code != 0 )) && PS1+="${red}"
+
+    PS1+='\$ '
+    PS1+="${rst}"
+
+    # append history from current session to the history file,
+    # otherwise it won't be saved when in tmux
+    history -a
 }
 
 
 if [ "$color_prompt" = yes ]; then
-    export PROMPT_COMMAND="prompt; history -a"
+    export PROMPT_COMMAND=prompt
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -179,46 +178,50 @@ if ! shopt -oq posix; then
 fi
 
 # source files
-src_files=(
-    ".config/bash/aliases"
-    ".config/bash/functions"
-    ".cargo/env"
+src_paths=(
+    "$HOME/.config/bash/aliases"
+    "$HOME/.config/bash/functions"
+    "$HOME/.config/gg/.env"
+    "$HOME/.cargo/env"
+    "/usr/share/doc/fzf/examples/key-bindings.bash"
 )
 
-for f in "${src_files[@]}"; do
-    [ -f "${HOME}/${f}" ] && . "${HOME}/${f}"
+for path in "${src_paths[@]}"; do
+    test -f "$path" && . "$path"
 done
-
-source /usr/share/doc/fzf/examples/key-bindings.bash
 
 window_width=$(tput cols)
 
 if (( window_width < 90 )); then
-    __fzf_preview_window_pos=bottom
+    fzf_preview_window_pos=bottom
 fi
 
-export FZF_DEFAULT_COMMAND='fdfind . --hidden --strip-cwd-prefix'
-export FZF_DEFAULT_OPTS="
-    --layout=reverse-list
-    --cycle
-    --prompt='→ '
-    --pointer=' '
-    --border=sharp
-    --preview-window=${fzf_preview_window_pos:-right},border-none
-    --color=fg+:white,fg:247,bg+:-1,prompt:white,info:grey
-    --bind=ctrl-u:clear-query
-    --bind=ctrl-space:toggle-preview
-    --height=65%"
+fzf_def_opts=(
+    "--layout=reverse-list"
+    "--cycle"
+    "--prompt='→ '"
+    "--pointer=' '"
+    "--border=sharp"
+    "--preview-window=hidden,${fzf_preview_window_pos:-right},border-none"
+    "--color=fg+:white,fg:247,bg+:-1,prompt:white,info:grey"
+    "--bind=ctrl-u:clear-query"
+    "--bind=ctrl-space:toggle-preview"
+    "--height=85%"
+)
 
-export FZF_CTRL_T_COMMAND='fdfind . --hidden --strip-cwd-prefix'
+export FZF_DEFAULT_COMMAND="fdfind . --hidden --follow"
+export FZF_DEFAULT_OPTS="${fzf_def_opts[@]}"
+
+export FZF_CTRL_T_COMMAND="fdfind . --type executable --type directory --hidden --strip-cwd-prefix"
 export FZF_CTRL_T_OPTS="
     --preview 'batcat -n --color always {}'
-    --preview-window=${__fzf_preview_window_pos:-right}"
-
-source "$HOME/.config/gg/.env"
+    --preview-window=hidden,${fzf_preview_window_pos:-right},border-none"
 
 # Custom environment variables
-export GH_TOKEN="$(awk -F '=' '/GH_TOKEN/ {print $2}' "$HOME/dotfiles/.env")"
+GH_TOKEN="$(awk -F '=' '/GH_TOKEN/ {print $2}' "$HOME/dotfiles/.env")"
+export GH_TOKEN
 
-export PAGER="most"
 export NPM_CONFIG_USERCONFIG="$HOME/.config/npm/npmrc"
+
+# export PAGER="most"
+
