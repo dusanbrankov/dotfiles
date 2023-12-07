@@ -9,9 +9,9 @@ for f in "$dotfiles"/*; do
     if [ -d "$f" ]; then
         dest="$HOME/${f##*/}"
         mkdir -p "$dest"
-        ln -sriv "$f"/* "$dest"
+        ln -srfv "$f"/* "$dest"
     else
-        ln -siv "$f" "$HOME"
+        ln -sfv "$f" "$HOME"
     fi
 done
 
