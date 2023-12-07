@@ -36,15 +36,26 @@ mkcp() {
 }
 
 # ls -l with displaying number of hidden files
+# ll() {
+#     local current_dir=${1:-.}
+#     local dotfiles=("${current_dir%/}"/.[!.]*)
+#
+#     if [ -e "${dotfiles[0]}" ]; then
+#         echo "$(tput bold)hidden files: ${#dotfiles[@]}$(tput sgr0)"
+#     fi
+#
+#     ls -hls "$@"
+# }
+
 ll() {
     local current_dir=${1:-.}
     local dotfiles=("${current_dir%/}"/.[!.]*)
 
     if [ -e "${dotfiles[0]}" ]; then
-        echo "$(tput bold)hidden files: ${#dotfiles[@]}$(tput sgr0)"
+        echo "hidden $(tput bold)${#dotfiles[@]}$(tput sgr0)"
     fi
 
-    ls -hls "$@"
+    lsd --long --git "$@"
 }
 
 # list hidden files and directories
@@ -196,7 +207,7 @@ cd_fzf() {
         --bind=ctrl-space:toggle-preview
     )
 
-    cd "$(fd "${fd_options[@]}" | fzf "${fzf_options[@]}")" || return 1
+    cd "$($FZF_DEFAULT_COMMAND "${fd_options[@]}" | fzf "${fzf_options[@]}")" || return 1
 }
 
 # cc - cd with fuzzy finder
