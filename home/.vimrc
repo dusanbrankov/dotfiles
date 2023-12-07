@@ -280,12 +280,12 @@ call plug#end()
 
 augroup bash_functions
   au!
-  autocmd BufNewFile,BufRead ~/dotfiles/bash/functions set syntax=bash
+  autocmd BufNewFile,BufRead ~/dotfiles/home/.config/functions set syntax=bash
 augroup END
 
 augroup bash_aliases
   au!
-  autocmd BufNewFile,BufRead ~/dotfiles/bash/aliases set syntax=bash
+  autocmd BufNewFile,BufRead ~/dotfiles/home/.config/bash/aliases set syntax=bash
 augroup END
 
 let &t_SI = "\e[6 q"

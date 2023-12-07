@@ -47,7 +47,7 @@ alias gtphp='cd /var/www/html'
 # Source config file
 alias brc='$EDITOR $HOME/.bashrc'
 alias src='source $HOME/.bashrc'
-alias vrc='$EDITOR $HOME/.vim/vimrc'
+alias vrc='$EDITOR $HOME/.vimrc'
 
 # Open config file
 alias a='$EDITOR $HOME/.config/bash/aliases'
