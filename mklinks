@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
-shopt -s extglob dotglob nullglob
+shopt -s dotglob nullglob
 
 dotfiles="$HOME/dotfiles/home"
-
-# unlink broken link files
-find "$HOME"{,/.config} -maxdepth 2 -xtype l -exec unlink '{}' \;
 
 # (re)create symbolic links
 for f in "$dotfiles"/*; do
