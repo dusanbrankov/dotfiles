@@ -1,18 +1,19 @@
 # Shell
-# ----------------------------------------------------------------------- #
+# ---------------------------------------------------------------- #
 # Show $PATH (replace ':' with new line)
 alias path='printf "%b\n" "${PATH//:/\\n}"'
 
 # Overwrite default
-# ----------------------------------------------------------------------- #
+# ---------------------------------------------------------------- #
 # Set default options for commonly used commands
 alias ls='lsd'
-# alias ls='ls -F --group-directories-first'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
 alias mv='mv -i'
+
+# alias n='nnn'
 
 # Allow running aliases with sudo
 alias sudo='sudo '
@@ -21,7 +22,7 @@ alias sudo='sudo '
 alias tree='tree --dirsfirst'
 
 # Files and directories
-# ----------------------------------------------------------------------- #
+# ---------------------------------------------------------------- #
 # cd shortcuts
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -40,14 +41,16 @@ alias rmr='rm -r'
 
 # Bookmarks
 alias gtnotes='cd ~/Documents/notes'
+alias gtdots='cd ~/dotfiles'
 alias gtphp='cd /var/www/html'
 
 # Dotfiles
-# ----------------------------------------------------------------------- #
+# ---------------------------------------------------------------- #
 # Source config file
 alias brc='$EDITOR $HOME/.bashrc'
 alias src='source $HOME/.bashrc'
 alias vrc='$EDITOR $HOME/.vimrc'
+alias nvrc='cd $HOME/.config/nvim/ && $EDITOR .'
 
 # Open config file
 alias a='$EDITOR $HOME/.config/bash/aliases'
@@ -58,7 +61,7 @@ alias gitignore='vim ~/.config/git/ignore'
 alias fdignore='vim ~/.config/fd/ignore'
 
 # Quick execution
-# ----------------------------------------------------------------------- #
+# ---------------------------------------------------------------- #
 alias c='clear'
 alias e='exit'
 alias h='history'
@@ -67,13 +70,15 @@ alias i='sudo apt install'
 alias ui='sudo apt update && sudo apt install'
 alias uu='sudo apt update && sudo apt upgrade'
 alias j='jobs'
-alias v='vim'
+alias vim='nvim'
+alias v='nvim'
+alias vv='nvim .'
 
 alias st='speedtest'
 alias open='xdg-open'
 
 # External commands
-# ----------------------------------------------------------------------- #
+# ---------------------------------------------------------------- #
 # npm
 alias ns='npm start'
 alias nb='npm run build'
@@ -93,6 +98,7 @@ alias gps='git push'
 alias gst='git status'
 alias gsw='git switch'
 alias gsc='git switch --create'
+alias gh='git help'
 
 # Font Converter
 alias woffy='font-converter ft2wf'
@@ -108,8 +114,9 @@ alias md='glow'
 alias fd='fdfind'
 alias tldr='tldr -p linux'
 
-# Internet, browser etc.
-# ----------------------------------------------------------------------- #
+# Network, internet
+# ---------------------------------------------------------------- #
+alias mysql='mycli'
 alias whatsmyip='curl http://icanhazip.com'
 alias stylebot='xclip -sel clip  $HOME/dev/snippets/stylebot/stylebot.css'
 

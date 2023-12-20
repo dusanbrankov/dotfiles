@@ -3,21 +3,20 @@ if has('termguicolors')
 endif
 
 " Colorscheme: {{{
-" https://github.com/sainnhe/everforest/tree/master
+    "" https://github.com/sainnhe/everforest/tree/master
 
-    set background=dark
+    " set background=dark
 
-    " Set contrast
-    " This configuration option should be placed before `colorscheme`.
-    " Available values: 'hard', 'medium'(default), 'soft'
+    "" Set contrast
+    "" This configuration option should be placed before `colorscheme`.
+    "" Available values: 'hard', 'medium'(default), 'soft'
     let g:everforest_background = 'hard'
-
     let g:everforest_better_performance = 1
     let g:everforest_disable_italic_comment = 1
     let g:everforest_transparent_background = 1
     let g:everforest_ui_contrast = 'high'
 
-    colorscheme everforest
+    " colorscheme everforest
 " }}}
 
 " Set: {{{
@@ -66,6 +65,7 @@ endif
     set mouse=i
     " Ignore capital letters during search.
     set ignorecase
+    set smartcase
     set linebreak
 
 " Misc:
@@ -129,8 +129,7 @@ endif
     nnoremap <leader>x :x<cr>
     nnoremap <leader>q :q<cr>
     nnoremap <leader>Q :q!<cr>
-    nnoremap <c-a> 0
-    nnoremap <c-w> ^
+    nnoremap <c-a> ^
     nnoremap <c-e> $
     nnoremap ; :
     " toggle relativenumber
@@ -264,20 +263,39 @@ endif
         autocmd FileType php nnoremap <buffer> <localleader>r :wa<cr>:!clear && php %<cr>
 " }}}
 
-packadd YouCompleteMe
+" packadd YouCompleteMe
 let g:javascript_plugin_jsdoc = 1
 
+" Switch cursor style when in Insert mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
 call plug#begin()
+" Colorschemes
+    Plug 'vim-scripts/Eddie.vim'
+    Plug 'michaeljsmith/vim-colours-dark-lord'
 
-" fzf native plugin
-Plug 'junegunn/fzf'
-" fzf.vim
-Plug 'junegunn/fzf.vim'
+" File navigation
+    Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf.vim'
 
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+" Editor
+    Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
+" Syntax highlighting, LSP etc.
+    Plug 'pangloss/vim-javascript'
+    Plug 'leafgarland/typescript-vim'
+    Plug 'peitalin/vim-jsx-typescript'
+    Plug 'bfrg/vim-cpp-modern'
+    Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    let g:coc_global_extensions = [
+      \ 'coc-tsserver'
+      \ ]
 call plug#end()
 
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 augroup bash_functions
   au!
   autocmd BufNewFile,BufRead ~/dotfiles/home/.config/functions set syntax=bash
@@ -288,5 +306,5 @@ augroup bash_aliases
   autocmd BufNewFile,BufRead ~/dotfiles/home/.config/bash/aliases set syntax=bash
 augroup END
 
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
+colorscheme darklord
+hi Normal guibg=NONE ctermbg=NONE

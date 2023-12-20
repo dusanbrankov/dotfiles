@@ -252,7 +252,7 @@ open_fzf() {
 # Usage: <ctrl-p>
 open_fzf_cwd() {
     local target
-    target="$(fd --hidden --strip-cwd-prefix | fzf --exact --exit-0)"
+    target="$(fd --type file --hidden --strip-cwd-prefix | fzf --exact --exit-0 --preview='batcat --color always --number {}' --preview-window=right --bind=ctrl-space:toggle-preview,alt-j:preview-down,alt-k:preview-up,q:abort)"
     test -n "$target" && "${EDITOR:-vim}" "$target"
 }
 
@@ -428,4 +428,53 @@ fhelp() {
 
 apts() {
     apt search ^"$*"
+}
+
+n() {
+    # Block nesting of nnn in subshells
+    [ "${NNNLVL:-0}" -eq 0 ] || {
+        echo "nnn is already running"
+        return
+    }
+
+    # The behaviour is set to cd on quit (nnn checks if NNN_TMPFILE is set)
+    # If NNN_TMPFILE is set to a custom path, it must be exported for nnn to
+    # see. To cd on quit only on ^G, remove the "export" and make sure not to
+    # use a custom path, i.e. set NNN_TMPFILE *exactly* as follows:
+    #      NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+    # stty start undef
+    # stty stop undef
+    # stty lwrap undef
+    # stty lnext undef
+
+    # The command builtin allows one to alias nnn to n, if desired, without
+    # making an infinitely recursive alias
+    command nnn "$@"
+
+    [ ! -f "$NNN_TMPFILE" ] || {
+        . "$NNN_TMPFILE"
+        rm -f "$NNN_TMPFILE" > /dev/null
+    }
+}
+
+now() {
+    date +"%Y-%m-%d_%H-%M"
+}
+
+mkc() {
+    (( $# != 1 )) && {
+        echo "Usage: mkc <filename>" >&2
+        exit 1
+    }
+
+    cp -i "$HOME"/dev/skel/c/starter.c "$1.c"
+    code -r "$1.c"
+}
+
+rc() {
+    # local prog="${1%.c}"
+    gcc "$1" && ./a.out
 }

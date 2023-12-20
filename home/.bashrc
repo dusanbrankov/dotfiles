@@ -22,7 +22,7 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M "
 export HISTIGNORE="h:history:history :exit:clear:c:..:...:cd:fg"
 
 # Set default applications
-export EDITOR="/usr/bin/vim"
+export EDITOR="/usr/bin/nvim"
 export BROWSER="/usr/bin/firefox-esr"
 
 # Base directories for cd command
@@ -43,7 +43,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-shopt -s globstar nullglob
+shopt -s extglob globstar nullglob
 
 # key bindings
 bind '"\C-f":"cd_fzf\n"'
@@ -83,7 +83,7 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-PROMPT_DIRTRIM=2
+PROMPT_DIRTRIM=3
 
 red="\[$(tput setaf 1)\]"
 green="\[$(tput setaf 2)\]"
@@ -100,14 +100,15 @@ rst="\[$(tput sgr0)\]"
 prompt() {
     local exit_code=$?
 
-    local clr_dir clr_branch clr_user
-    # clr_dir="\[$(tput setaf 138)\]"
-    # clr_dir="\[$(tput setaf 146)\]"
-    clr_dir="\[$(tput setaf 187)\]"
+    # colors
+    local clr_dir
+    clr_dir="\[$(tput setaf 7)\]"
+    local clr_ssh
     clr_ssh="\[$(tput setaf 109)\]"
-    clr_branch="\[$(tput setaf 245)\]"
+    local clr_branch
+    clr_branch="\[$(tput setaf 242)\]"
+    local clr_user
     clr_user="\[$(tput setaf 66)\]"
-
     local branch
     branch="$(git branch --show-current 2>/dev/null)"
 
@@ -122,10 +123,12 @@ prompt() {
     fi
 
     # current directory
-    PS1+="${clr_dir}\W${rst} "
+    PS1+="\w${rst} "
 
     # git branch
     test -n "$branch" && PS1+="${clr_branch}${branch}${rst} "
+
+    PS1+="${grey}"
 
     # exit status
     (( exit_code != 0 )) && PS1+="${red}"
@@ -212,7 +215,7 @@ fzf_def_opts=(
 export FZF_DEFAULT_COMMAND="fdfind . --hidden --follow"
 export FZF_DEFAULT_OPTS="${fzf_def_opts[@]}"
 
-export FZF_CTRL_T_COMMAND="fdfind . --type executable --type directory --hidden --strip-cwd-prefix"
+export FZF_CTRL_T_COMMAND="fdfind . --type file --type directory --hidden --strip-cwd-prefix"
 export FZF_CTRL_T_OPTS="
     --preview 'batcat -n --color always {}'
     --preview-window=hidden,${fzf_preview_window_pos:-right},border-none"
@@ -224,4 +227,15 @@ export GH_TOKEN
 export NPM_CONFIG_USERCONFIG="$HOME/.config/npm/npmrc"
 
 # export PAGER="most"
+
+nnn_cd() {
+    if [ -n "$NNN_PIPE" ]; then
+        printf "%s\0" "0c${PWD}" > "${NNN_PIPE}" !&
+    fi
+}
+trap nnn_cd EXIT
+
+export NNN_PLUG='f:finder;o:fzopen;p:mocq;d:diffs;t:nmount;v:imgview'
+
+export BAT_THEME="base16"
 
