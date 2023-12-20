@@ -2,7 +2,7 @@
 
 shopt -s dotglob nullglob
 
-dotfiles="$HOME/dotfiles/home"
+dotfiles="$HOME/dotfiles/dots"
 
 # (re)create symbolic links
 for f in "$dotfiles"/*; do
