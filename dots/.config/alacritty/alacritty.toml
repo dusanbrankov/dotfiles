@@ -22,7 +22,7 @@ draw_bold_text_with_bright_colors = false
 
 [colors.primary]
 foreground = "#d2d2d2"
-background = "#252323"
+background = "#201f1f"
 
 [colors.normal]
 black = "#111213"
@@ -51,7 +51,9 @@ bindings = [
     { key = "Up", mods = "Control | Shift", action = "ScrollLineUp" },
     { key = "Down", mods = "Control | Shift", action = "ScrollLineDown" },
     { key = "F", mods = "Control | Shift", action = "ToggleFullScreen" },
-    { key = "A", mods = "Control | Shift", action = "ToggleViMode" }
+    { key = "A", mods = "Control | Shift", action = "ToggleViMode" },
+    # { key = "Return", mods = "Shift",   chars = "\x1b[13;2u" },
+    # { key = "Return", mods = "Control", chars = "\x1b[13;5u" },
 ]
 
 [selection]

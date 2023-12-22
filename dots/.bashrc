@@ -102,11 +102,11 @@ prompt() {
 
     # colors
     local clr_dir
-    clr_dir="\[$(tput setaf 187)\]"
+    clr_dir="\[$(tput setaf 111)\]"
     local clr_ssh
     clr_ssh="\[$(tput setaf 109)\]"
     local clr_branch
-    clr_branch="\[$(tput setaf 245)\]"
+    clr_branch="\[$(tput setaf 246)\]"
     local clr_user
     clr_user="\[$(tput setaf 66)\]"
     local branch
@@ -126,14 +126,14 @@ prompt() {
     PS1+="${clr_dir}\w${rst} "
 
     # git branch
-    test -n "$branch" && PS1+="${clr_branch}${branch}${rst} "
+    test -n "$branch" && PS1+="${clr_branch}(${branch})${rst} "
 
     # exit status
     (( exit_code != 0 )) && PS1+="${red}"
 
-    PS1+='\$ '
+    PS1+='\n\$ '
     PS1+="${rst}"
-
+    # PS0='\n'
     # append history from current session to the history file,
     # otherwise it won't be saved when in tmux
     history -a
