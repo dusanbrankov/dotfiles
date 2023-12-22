@@ -1,10 +1,28 @@
 return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    dependencies = {
+        "nvim-treesitter/nvim-treesitter-textobjects", -- Additional text objects via treesitter
+        "windwp/nvim-ts-autotag", -- Automatically close html/xml tags
+    },
     config = function ()
         require("nvim-treesitter.configs").setup({
             -- A list of parser names, or "all" (the five listed parsers should always be installed)
-            ensure_installed = { "bash", "c", "javascript", "json", "typescript", "tsx", "lua", "rust", "vim", "vimdoc", "query" },
+            ensure_installed = {
+                "bash",
+                "c",
+                "css",
+                "html",
+                "javascript",
+                "json",
+                "lua",
+                "php",
+                "rust",
+                "tsx",
+                "typescript",
+                "vim",
+                "vimdoc",
+            },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
             sync_install = false,

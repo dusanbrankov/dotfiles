@@ -16,9 +16,11 @@ vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.breakindent = true
 vim.opt.scrolloff = 999
-
+vim.opt.showmode = false
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+
+-- vim.opt.showtabline = 2
 
 -- Save undo history
 vim.opt.undofile = true

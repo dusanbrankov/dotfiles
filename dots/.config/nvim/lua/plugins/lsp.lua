@@ -59,6 +59,16 @@ return {
 
     {"neovim/nvim-lspconfig"},
     {"hrsh7th/cmp-nvim-lsp"},
-    {"hrsh7th/nvim-cmp"},
+    {
+        "hrsh7th/nvim-cmp",
+        event = { "InsertEnter", "CmdlineEnter" },
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp", -- Autocompletion with LSPs
+			"hrsh7th/cmp-buffer", -- Autocompletion from words in buffer
+			"hrsh7th/cmp-path", -- Autocompletion from files
+			"hrsh7th/cmp-cmdline", -- Autocompletion for nvim commands
+			"saadparwaiz1/cmp_luasnip", -- Snippets autocompletion
+		},
+    },
     {"L3MON4D3/LuaSnip"},
 }
