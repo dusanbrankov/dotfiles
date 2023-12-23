@@ -131,7 +131,7 @@ prompt() {
     # exit status
     (( exit_code != 0 )) && PS1+="${red}"
 
-    PS1+='\n\$ '
+    PS1+='\$ '
     PS1+="${rst}"
     # PS0='\n'
     # append history from current session to the history file,
