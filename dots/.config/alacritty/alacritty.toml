@@ -3,7 +3,7 @@
 [window]
 title = "Alacritty"
 # padding = { x = 12, y = 8 }
-dynamic_padding = true
+# dynamic_padding = true
 decorations = "Full"
 opacity = 1.0
 
@@ -13,9 +13,9 @@ TERM = "xterm-256color"
 [font]
 normal = { family = "FiraCode Nerd Font", style = "Regular" }
 bold = { family = "FiraCode Nerd Font", style = "Bold" }
-size = 10
-offset = { x = 0, y = 5 }
-glyph_offset = { x = 0, y = 2 }
+size = 11
+offset = { x = 0, y = 3 }
+glyph_offset = { x = 0, y = 1 }
 
 [colors]
 draw_bold_text_with_bright_colors = false

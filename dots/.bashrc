@@ -102,7 +102,7 @@ prompt() {
 
     # colors
     local clr_dir
-    clr_dir="\[$(tput setaf 111)\]"
+    clr_dir="\[$(tput setaf 110)\]"
     local clr_ssh
     clr_ssh="\[$(tput setaf 109)\]"
     local clr_branch
@@ -116,7 +116,7 @@ prompt() {
     PS1='\[\e]2;\u@\h:\w\a\]'
 
     # user
-    # PS1+="${clr_user}\u${rst} "
+    # PS1+="${clr_user}\u@\h${rst} "
 
     if [[ -n $SSH_CLIENT || -n $SSH_TTY ]]; then
         clr_dir="$clr_ssh"
@@ -128,6 +128,7 @@ prompt() {
     # git branch
     test -n "$branch" && PS1+="${clr_branch}(${branch})${rst} "
 
+    PS1+="${grey}"
     # exit status
     (( exit_code != 0 )) && PS1+="${red}"
 
