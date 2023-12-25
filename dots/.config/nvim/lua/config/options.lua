@@ -8,7 +8,7 @@ vim.opt.backup = false
 vim.opt.clipboard = "unnamedplus"
 
 -- Appearance
-vim.opt.guicursor = ""
+-- vim.opt.guicursor = ""
 vim.opt.wrap = false
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -46,3 +46,4 @@ vim.opt.smarttab = true
 vim.opt.autoindent = true
 
 vim.opt.virtualedit = "block"
+vim.opt.cursorline = true
