@@ -14,8 +14,8 @@ TERM = "xterm-256color"
 normal = { family = "FiraCode Nerd Font", style = "Regular" }
 bold = { family = "FiraCode Nerd Font", style = "Bold" }
 size = 11
-offset = { x = 0, y = 3 }
-glyph_offset = { x = 0, y = 1 }
+offset = { x = 0, y = 2 }
+glyph_offset = { x = 0, y = 0 }
 
 [colors]
 draw_bold_text_with_bright_colors = false
@@ -40,8 +40,8 @@ white = "#d7d5cf"
 
 [colors.cursor]
 text = "CellBackground"
-cursor = "CellForeground"
-# cursor = "#5fd7af"
+# cursor = "CellForeground"
+cursor = "#d0bc00"
 
 [cursor]
 style = { shape = "block", blinking = "never" }

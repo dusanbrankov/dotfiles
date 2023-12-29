@@ -102,11 +102,11 @@ prompt() {
 
     # colors
     local clr_dir
-    clr_dir="\[$(tput setaf 110)\]"
+    clr_dir="\[$(tput setaf 7)\]"
     local clr_ssh
     clr_ssh="\[$(tput setaf 109)\]"
     local clr_branch
-    clr_branch="\[$(tput setaf 246)\]"
+    clr_branch="\[$(tput setaf 109)\]"
     local clr_user
     clr_user="\[$(tput setaf 66)\]"
     local branch
@@ -123,10 +123,10 @@ prompt() {
     fi
 
     # current directory
-    PS1+="${clr_dir}\w${rst} "
+    PS1+="${clr_dir}\W${rst} "
 
     # git branch
-    test -n "$branch" && PS1+="${clr_branch}(${branch})${rst} "
+    test -n "$branch" && PS1+="${clr_dir}(${branch})${rst} "
 
     PS1+="${grey}"
     # exit status
