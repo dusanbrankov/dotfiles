@@ -19,14 +19,14 @@ vim.cmd([[
 
     " set guitablabel=%t   
 
-    set statusline+=\%#StatusLineFileText#
-    set statusline+=%.50F%m\    " Path to the file
-    set statusline+=\%#StatusLineTextColor#
-    set statusline+=(%Y)\         " Filetype of the file
-    set statusline+=%=          " Switch to the right side
-    set statusline+=%l,%c       " Current line
-    set statusline+=/           " Separator
-    set statusline+=%L          " Total lines
+    " set statusline+=\%#StatusLineFileText#
+    " set statusline+=%.50F%m\    " Path to the file
+    " set statusline+=\%#StatusLineTextColor#
+    " set statusline+=(%Y)\         " Filetype of the file
+    " set statusline+=%=          " Switch to the right side
+    " set statusline+=%l,%c       " Current line
+    " set statusline+=/           " Separator
+    " set statusline+=%L          " Total lines
 ]])
 
 vim.cmd.highlight({ "EndOfBuffer", "ctermfg=NONE guifg=NONE" })
