@@ -1,6 +1,12 @@
 command:serve
+command:dev
+command:todos
+command:home
+command:notes
 search:userfonfi
 search:userconfig
 search:pane
 search:toggle
 search:binar
+search:evenl
+search:detach

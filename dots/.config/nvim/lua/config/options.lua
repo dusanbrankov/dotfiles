@@ -33,6 +33,8 @@ vim.opt.inccommand = "split"
 -- Keep signcolumn on by default
 vim.wo.signcolumn = "yes"
 
+vim.opt.colorcolumn = "80"
+
 -- Set completeopt to have a better completion experience
 vim.opt.completeopt = "menuone,noselect"
 
@@ -47,3 +49,5 @@ vim.opt.autoindent = true
 
 vim.opt.virtualedit = "block"
 vim.opt.cursorline = true
+
+vim.opt.autochdir = true

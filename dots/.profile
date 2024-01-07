@@ -17,6 +17,7 @@ set -- \
     ".local/bin" \
     "bin" \
     ".npm-global/bin" \
+    ".appimages" \
     ".config/composer/vendor/bin"
     
 for bin_path in "$@"; do

@@ -14,9 +14,9 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 vim.keymap.set({ "n", "v" }, "<leader>p", "\"_dP")
 
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
-vim.keymap.set("n", ";", ":")
+vim.keymap.set({ "n", "v" }, ";", ":")
 
 -- Tab navigation
 vim.keymap.set("n", "<a-k>", ":tabnext<cr>")
